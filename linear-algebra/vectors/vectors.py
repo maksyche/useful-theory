@@ -31,27 +31,28 @@ class MyScene(Scene):
         self.add(plane, axes_labels)
 
         # The scene itself
-
-        vector_a = Vector(np.array([1.5, 2.5]), color=BLUE)
+        vector_a_coords = [1.5, 2.5]
+        vector_a = plane.get_vector(np.array(vector_a_coords), color=BLUE)
+        vector_a_coord_label = (MathTex(
+            "\\begin{bmatrix}" + str(vector_a_coords[0]) + " \\\\ " + str(vector_a_coords[1]) + " \\end{bmatrix}",
+            color=BLUE).next_to(vector_a.get_end(), direction=RIGHT, buff=0.2))
         vector_a_label = MathTex("\\vec{a}", color=BLUE).next_to(vector_a, direction=UP, buff=-0.8)
-        vector_a_coord_label = vector_a.coordinate_label(integer_labels=False, color=BLUE)
-        vector_a_vertical_line = DashedLine(np.array([vector_a.get_end()[0], 0, 0]), vector_a.get_end(),
-                                            color=YELLOW, stroke_opacity=0.5)
-        vector_a_horizontal_line = DashedLine(np.array([0, vector_a.get_end()[1], 0]), vector_a.get_end(),
-                                              color=YELLOW, stroke_opacity=0.5)
+        vector_a_vertical_line = plane.get_vertical_line(vector_a.get_end(), color=YELLOW)
+        vector_a_horizontal_line = plane.get_horizontal_line(vector_a.get_end(), color=YELLOW)
         self.play(Create(vector_a_vertical_line), Create(vector_a_horizontal_line))
         self.play(Create(vector_a))
         self.play(Write(vector_a_label))
         self.play(Write(vector_a_coord_label))
         self.wait(0.5)
 
-        vector_b = Vector(np.array([-4, -2]), color=RED)
+        vector_b_coords = [-4, -2]
+        vector_b = Vector(np.array(vector_b_coords), color=RED)
+        vector_b_coord_label = (MathTex(
+            "\\begin{bmatrix}" + str(vector_a_coords[0]) + " \\\\ " + str(vector_a_coords[1]) + " \\end{bmatrix}",
+            color=RED).next_to(vector_b.get_end(), direction=LEFT, buff=0.2))
         vector_b_label = MathTex("\\vec{b}", color=RED).next_to(vector_b, direction=DOWN, buff=-0.8)
-        vector_b_coord_label = vector_b.coordinate_label(color=RED)
-        vector_b_vertical_line = DashedLine(np.array([vector_b.get_end()[0], 0, 0]), vector_b.get_end(),
-                                            color=YELLOW, stroke_opacity=0.5)
-        vector_b_horizontal_line = DashedLine(np.array([0, vector_b.get_end()[1], 0]), vector_b.get_end(),
-                                              color=YELLOW, stroke_opacity=0.5)
+        vector_b_vertical_line = plane.get_vertical_line(vector_b.get_end(), color=YELLOW)
+        vector_b_horizontal_line = plane.get_horizontal_line(vector_b.get_end(), color=YELLOW)
         self.play(Create(vector_b_vertical_line), Create(vector_b_horizontal_line))
         self.play(Create(vector_b))
         self.play(Write(vector_b_label))
