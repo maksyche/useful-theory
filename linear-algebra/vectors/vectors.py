@@ -53,7 +53,7 @@ class MyScene(Scene):
         self.wait(0.5)
 
         vector_b_coords = np.array([-4, -2])
-        vector_b = Vector(np.array(vector_b_coords), color=RED)
+        vector_b = plane.get_vector(np.array(vector_b_coords), color=RED)
         vector_b_coord_label = (MathTex(
             "\\begin{bmatrix}" + str(vector_b_coords[0]) + " \\\\ " + str(vector_b_coords[1]) + " \\end{bmatrix}",
         ).next_to(vector_b.get_end(), direction=LEFT, buff=0.2))
