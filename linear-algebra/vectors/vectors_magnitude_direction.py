@@ -13,6 +13,8 @@ class MyScene(Scene):
             # 1.6/0.9
             x_range=(-5.4, 7.4),
             y_range=(-1.6, 5.6),
+            x_length=12.8,
+            y_length=7.2,
 
             axis_config={
                 "include_numbers": True,
@@ -31,28 +33,41 @@ class MyScene(Scene):
         self.add(plane, axes_labels)
 
         # The scene itself
-        vector_coords = [4.5, 3]
+        vector_coords = np.array([4.5, 3])
         vector = plane.get_vector(np.array(vector_coords), color=BLUE)
-        vector_coord_label = (
-            MathTex("\\begin{bmatrix}" + str(vector_coords[0]) + " \\\\ " + str(vector_coords[1]) + " \\end{bmatrix}",
-                    color=BLUE).next_to(vector.get_end(), direction=RIGHT, buff=0.2))
+        vector_coord_label = (MathTex(
+            "\\begin{bmatrix}" + str(vector_coords[0]) + " \\\\ " + str(vector_coords[1]) + " \\end{bmatrix}",
+        ).next_to(vector.get_end(), direction=RIGHT, buff=0.2))
         vector_label = MathTex("\\vec{a}", color=BLUE).next_to(vector, direction=UP, buff=-0.95)
-        vector_horizontal_line = plane.get_horizontal_line(np.array([vector.get_end()[0], vector.get_start()[1], 0]),
-                                                           color=YELLOW)
-        vector_horizontal_line_label = MathTex("a", color=YELLOW).next_to(vector_horizontal_line, direction=UP,
-                                                                          buff=0.3)
+        vector_horizontal_line = plane.get_horizontal_line(
+            np.array([vector.get_end()[0], vector.get_start()[1], 0]), color=YELLOW)
+        vector_horizontal_line_label = (MathTex("a", color=YELLOW)
+                                        .next_to(vector_horizontal_line, direction=UP, buff=0.3))
         vector_vertical_line = plane.get_vertical_line(vector.get_end(), color=YELLOW)
-        vector_vertical_line_label = MathTex("b", color=YELLOW).next_to(vector_vertical_line, direction=RIGHT, buff=0.2)
-        unit_vector = plane.get_vector(vector_coords / vector.get_length(), color=RED)
+        vector_vertical_line_label = (MathTex("b", color=YELLOW)
+                                      .next_to(vector_vertical_line, direction=RIGHT, buff=0.2))
+        unit_vector_coords = vector_coords / vector.get_length()
+        unit_vector = plane.get_vector(unit_vector_coords, color=RED)
         unit_vector_label = MathTex("\\hat{a}", color=RED).next_to(unit_vector, direction=UP, buff=0)
-        math_text_length = MathTex("||\\vec{a}||=\\sqrt{a^2 + b^2}", color=YELLOW)
-        math_text_unit = MathTex("\\hat{a}=\\frac{\\vec{a}}{||\\vec{a}||}", color=RED)
-        VGroup(math_text_length, math_text_unit).arrange(DOWN).next_to(plane, direction=UL, buff=-4.5)
+        math_text_length = MathTex("||\\vec{a}||=\\sqrt{a^2 + b^2}")
+        math_text_length_calc = MathTex(
+            "||\\vec{a}||=\\sqrt{" + str(vector_coords[0]) + "^2 + " + str(vector_coords[1]) + "^2} \\approx "
+            + str(round(vector.get_length(), 2))
+        )
+        math_text_unit = MathTex(
+            "\\hat{a} = \\frac{\\vec{a}}{||\\vec{a}||} \\approx "
+            "\\begin{bmatrix}" + str(round(unit_vector_coords[0], 2)) + " \\\\ "
+            + str(round(unit_vector_coords[1], 2)) + " \\end{bmatrix}",
+        )
+        (VGroup(math_text_length, math_text_length_calc, math_text_unit)
+         .arrange(DOWN).scale(0.8).next_to(plane, direction=UL, buff=-4.5))
+
         self.play(Create(vector), Write(vector_label))
         self.play(Write(vector_coord_label))
         self.play(Create(vector_horizontal_line), Write(vector_horizontal_line_label))
         self.play(Create(vector_vertical_line), Write(vector_vertical_line_label))
         self.play(Write(math_text_length))
+        self.play(Write(math_text_length_calc))
         self.play(Write(math_text_unit))
         self.play(Create(unit_vector))
         self.play(Write(unit_vector_label))
