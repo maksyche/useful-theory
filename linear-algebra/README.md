@@ -17,9 +17,23 @@ can use the [Pythagorean theorem](https://en.wikipedia.org/wiki/Pythagorean_theo
 
 A **unit (normalized) vector** ( $\hat{a}$ ), on the other hand, represents the direction of the vector independent of its length. 
 The magnitude of a unit vector is always 1. To calculate the unit vector of any vector, we take the original vector and 
-divide it by its magnitude $\hat{a}=\frac{\vec{a}}{||\vec{a}||}$:
+divide it by its magnitude: 
+$`\hat{a} = \frac{\vec{a}}{||\vec{a}||}`$.
 
 We can use these two components to re-create the original vector by multiplying the unit vector by the length of the 
-original vector $\vec{a}=\hat{a} * ||\vec{a}||$.
+original vector: 
+$`\vec{a} = \hat{a} * ||\vec{a}||`$.
 
 ![Vectors](vectors/vectors_magnitude_direction.gif)
+
+### Vector Addition
+Graphically, we can think of **adding two vectors** together as placing these vectors so the tail of the second one 
+sits on the tip of the first one. The sum is a vector drawn from the origin to the tip of the second vector.
+
+**Vector subtraction** works similarly. We place the tip of the smaller vector to sit on the tip of the bigger one and 
+draw the result vector from the origin to the tail of the smaller vector.
+
+Numerically, we add/subtract vectors **component by component**: 
+$`\vec{c} = \vec{a} + \vec{b} = \begin{bmatrix} x_{a} + x_{b} \\ y_{a} + y_{b} \end{bmatrix}`$
+
+![Vectors](vectors/vectors_addition.gif)
