@@ -2,6 +2,7 @@
 * [Vectors](#vectors)
     * [Vector Magnitude and Direction](#vector-magnitude-and-direction)
     * [Vector Addition](#vector-addition)
+    * [Vector Number Multiplication](#vector-number-multiplication)
 
 ## Vectors
 ![Vectors](vectors/vectors.gif)
@@ -14,7 +15,8 @@ can be applied to all of them.
 ### Vector Magnitude and Direction
 The **magnitude of a vector** ( $||\vec{a}||$ ) is the distance from the endpoint of the vector to the origin. It's a 
 number that represents the length of the vector independent of the direction. To calculate the magnitude of a vector we 
-can use the [Pythagorean theorem](https://en.wikipedia.org/wiki/Pythagorean_theorem). 
+can use the [Pythagorean theorem](https://en.wikipedia.org/wiki/Pythagorean_theorem):
+$`||\vec{a}||=\sqrt{x_{a}^2 + y_{a}^2}`$. 
 
 A **unit (normalized) vector** ( $\hat{a}$ ), on the other hand, represents the direction of the vector independent of its length. 
 The magnitude of a unit vector is always 1. To calculate the unit vector of any vector, we take the original vector and 
@@ -38,3 +40,12 @@ Numerically, we add/subtract vectors **component by component**:
 $`\vec{c} = \vec{a} + \vec{b} = \begin{bmatrix} x_{a} + x_{b} \\ y_{a} + y_{b} \end{bmatrix}`$
 
 ![Vectors](vectors/vectors_addition.gif)
+
+### Vector Number Multiplication
+Graphically, we **multiply a vector by a number (scalar)** to either stretch or squish the vector (scale it). 
+Multiplying a vector by a negative number also **flips its direction**.
+
+Numerically, we multiply/divide every **vector's component by the number**:
+$`\vec{a} * c = \begin{bmatrix} x_{a} * c \\ y_{a} * c \end{bmatrix}`$
+
+![Vectors](vectors/vectors_number_multiplication.gif)
