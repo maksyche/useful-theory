@@ -3,6 +3,7 @@
     * [Vector Magnitude and Direction](#vector-magnitude-and-direction)
     * [Vector Addition](#vector-addition)
     * [Vector Number Multiplication](#vector-number-multiplication)
+    * [Vector Linear Combination](#vector-linear-combination)
 
 ## Vectors
 ![Vectors](vectors/vectors.gif)
@@ -49,3 +50,10 @@ Numerically, we multiply/divide every **vector's component by the number**:
 $`\vec{a} * c = \begin{bmatrix} x_{a} * c \\ y_{a} * c \end{bmatrix}`$
 
 ![Vectors](vectors/vectors_number_multiplication.gif)
+
+### Vector Linear Combination
+**Linear combinations** are obtained by using [Vector Addition](#vector-addition) and 
+[Vector Number Multiplication](#vector-number-multiplication). For example, a linear combination of vectors 
+$\vec{v_{1}}$ and $\vec{v_{2}}$ would be an expression of the form $c_{1}\vec{v_{1}} + c_{2}\vec{v_{2}}$, where $c_{1}$ 
+and $c_{2}$ are some constants.
+
