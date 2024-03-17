@@ -4,6 +4,10 @@ from manim import *  # 0.18.0
 
 class MyScene(Scene):
     def construct(self):
+
+        # Defaults
+        MathTex.set_default(font_size=36)
+
         plane = NumberPlane(
             # X/Y ration should always be 16/9, but with some space after the last tick:
             # 17.6/9.9
@@ -38,7 +42,7 @@ class MyScene(Scene):
         vector_coord_label = (MathTex(
             "\\begin{bmatrix}" + str(vector_coords[0]) + " \\\\ " + str(vector_coords[1]) + " \\end{bmatrix}",
         ).next_to(vector.get_end(), direction=RIGHT, buff=0.2))
-        vector_label = MathTex("\\vec{a}", color=BLUE).next_to(vector, direction=UP, buff=-0.95)
+        vector_label = MathTex("\\vec{a}", color=BLUE).next_to(vector, direction=UP, buff=-1.1)
         vector_horizontal_line = plane.get_horizontal_line(
             np.array([vector.get_end()[0], vector.get_start()[1], 0]), color=YELLOW)
         vector_horizontal_line_label = (MathTex("a", color=YELLOW)
@@ -60,7 +64,7 @@ class MyScene(Scene):
             + str(round(unit_vector_coords[1], 2)) + " \\end{bmatrix}",
         )
         (VGroup(math_text_length, math_text_length_calc, math_text_unit)
-         .arrange(DOWN).scale(0.8).next_to(plane, direction=UL, buff=-4.5))
+         .arrange(DOWN).next_to(plane, direction=UL, buff=-4.5))
 
         self.play(Create(vector), Write(vector_label))
         self.play(Write(vector_coord_label))

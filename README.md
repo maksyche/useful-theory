@@ -8,7 +8,7 @@ This is my cheatsheet for math, electronics, physics, and some other science stu
 - [Digital Signal Processing](dsp/README.md)
 - [Electronics](/electronics/README.md)
 
-### Generate Contents
+### Generate Contents Table
 ```bash
 python3 toc_generator.py
 ```

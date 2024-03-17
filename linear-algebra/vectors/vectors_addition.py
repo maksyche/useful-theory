@@ -4,6 +4,10 @@ from manim import *  # 0.18.0
 
 class MyScene(Scene):
     def construct(self):
+
+        # Defaults
+        MathTex.set_default(font_size=36)
+
         plane = NumberPlane(
             # X/Y ration should always be 16/9, but with some space after the last tick:
             # 17.6/9.9
@@ -41,7 +45,7 @@ class MyScene(Scene):
         ).next_to(vector_a.get_end(), direction=RIGHT, buff=0.2))
         vector_b_coords = np.array([1.5, 2, 0])
         vector_b = plane.get_vector(np.array(vector_b_coords), color=BLUE)
-        vector_b_label = MathTex("\\vec{b}", color=BLUE).next_to(vector_b, direction=RIGHT, buff=-1)
+        vector_b_label = MathTex("\\vec{b}", color=BLUE).next_to(vector_b, direction=RIGHT, buff=-1.1)
         vector_b_coord_label = (MathTex(
             "\\begin{bmatrix}" + str(vector_b_coords[0]) + " \\\\ " + str(vector_b_coords[1]) + " \\end{bmatrix}",
         ).next_to(vector_b.get_end(), direction=RIGHT, buff=0.2))
@@ -63,7 +67,7 @@ class MyScene(Scene):
             + str(vector_c_coords[1]) + " \\end{bmatrix}"
         )
         (VGroup(math_text_vector_addition, math_text_vector_addition_calc)
-         .arrange(DOWN).scale(0.8).next_to(vector_c, direction=UP, buff=-0.5))
+         .arrange(DOWN).next_to(vector_c, direction=UP, buff=-0.5))
 
         self.play(Create(vector_a), Create(vector_b), Write(vector_a_label), Write(vector_b_label),
                   Write(vector_a_coord_label), Write(vector_b_coord_label))

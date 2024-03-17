@@ -1,6 +1,7 @@
 # Linear Algebra
 * [Vectors](#vectors)
     * [Vector Magnitude and Direction](#vector-magnitude-and-direction)
+    * [Vector Addition](#vector-addition)
 
 ## Vectors
 ![Vectors](vectors/vectors.gif)

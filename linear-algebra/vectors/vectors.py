@@ -4,6 +4,10 @@ from manim import *  # 0.18.0
 
 class MyScene(Scene):
     def construct(self):
+
+        # Defaults
+        MathTex.set_default(font_size=36)
+
         plane = NumberPlane(
             # X/Y ration should always be 16/9, but with some space after the last tick:
             # 17.6/9.9
