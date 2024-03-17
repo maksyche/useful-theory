@@ -45,15 +45,15 @@ class MyScene(Scene):
         vector_label = MathTex("\\vec{a}", color=BLUE).next_to(vector, direction=UP, buff=-1.1)
         vector_horizontal_line = plane.get_horizontal_line(
             np.array([vector.get_end()[0], vector.get_start()[1], 0]), color=YELLOW)
-        vector_horizontal_line_label = (MathTex("a", color=YELLOW)
+        vector_horizontal_line_label = (MathTex("x_{a}", color=YELLOW)
                                         .next_to(vector_horizontal_line, direction=UP, buff=0.3))
         vector_vertical_line = plane.get_vertical_line(vector.get_end(), color=YELLOW)
-        vector_vertical_line_label = (MathTex("b", color=YELLOW)
+        vector_vertical_line_label = (MathTex("y_{a}", color=YELLOW)
                                       .next_to(vector_vertical_line, direction=RIGHT, buff=0.2))
         unit_vector_coords = vector_coords / vector.get_length()
         unit_vector = plane.get_vector(unit_vector_coords, color=RED)
         unit_vector_label = MathTex("\\hat{a}", color=RED).next_to(unit_vector, direction=UP, buff=0)
-        math_text_length = MathTex("||\\vec{a}||=\\sqrt{a^2 + b^2}")
+        math_text_length = MathTex("||\\vec{a}||=\\sqrt{x_{a}^2 + y_{a}^2}")
         math_text_length_calc = MathTex(
             "||\\vec{a}||=\\sqrt{" + str(vector_coords[0]) + "^2 + " + str(vector_coords[1]) + "^2} \\approx "
             + str(round(vector.get_length(), 2))
