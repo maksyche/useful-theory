@@ -87,7 +87,9 @@ The **span** of vectors is the set of all their [linear combinations](#vector-li
 [vector space](#vector-space) is a set of linearly independent vectors that **span** the full space. For example, by
 using linear combinations of any two linearly independent vectors, we can create any vector in the 2D space.
 
-The **basis** vectors in the $x,y$ coordinate system are vectors $\hat{i},\hat{j}$ (i-hat and j-hat).
+The **basis** vectors in the $x,y$ coordinate system are vectors $\hat{i},\hat{j}$ (i-hat and j-hat). We can use these 
+basis vectors to describe any other vector of 2D space. For example a vector with coordinates `[3, 2]` can be described 
+this way: $\begin{bmatrix} 3 \\ 2 \end{bmatrix} = (3 * \hat{i}) + (2 * \hat{j})$
 
 ![Vectors](vectors/vectors_span_and_basis.gif)
 
