@@ -10,7 +10,7 @@
 
 ## Introduction to Vectors
 
-![Vectors](vectors/vectors.gif)
+![Vectors](vectors.gif)
 
 A vector may have many definitions: a point in space, an ordered list of numbers, a quantity with magnitude and
 direction, etc. More abstractly, a vector is simply an element of a [vector space](#vector-space). All these diverse
@@ -34,7 +34,7 @@ We can use these two components to re-create the original vector by multiplying 
 original vector:
 $`\vec{a} = \hat{a} * ||\vec{a}||`$.
 
-![Vectors](vectors/vectors_magnitude_direction.gif)
+![Vectors](vectors_magnitude_direction.gif)
 
 ### Vector Addition
 
@@ -47,7 +47,7 @@ draw the result vector from the origin to the tail of the smaller vector.
 Numerically, we add/subtract vectors **component by component**:
 $`\vec{c} = \vec{a} + \vec{b} = \begin{bmatrix} x_{a} + x_{b} \\ y_{a} + y_{b} \end{bmatrix}`$
 
-![Vectors](vectors/vectors_addition.gif)
+![Vectors](vectors_addition.gif)
 
 ### Vector Scalar Multiplication
 
@@ -57,7 +57,7 @@ Multiplying a vector by a negative number also **flips its direction**.
 Numerically, we multiply/divide every **vector's component by the number**:
 $`\vec{a} * c = \begin{bmatrix} x_{a} * c \\ y_{a} * c \end{bmatrix}`$
 
-![Vectors](vectors/vectors_number_multiplication.gif)
+![Vectors](vectors_number_multiplication.gif)
 
 ### Vector Linear Combination
 
@@ -79,7 +79,7 @@ on the same plane** (for 3D). It means that **one vector can be expressed as a l
 maximum number of possible linearly independent vectors is the same as the dimension of the
 [vector space](#vector-space).
 
-![Vectors](vectors/vectors_dependence.gif)
+![Vectors](vectors_dependence.gif)
 
 ### Vector Span and Basis
 
@@ -91,7 +91,7 @@ The **basis** vectors in the $x,y$ coordinate system are vectors $\hat{i},\hat{j
 basis vectors to describe any other vector of 2D space. For example a vector with coordinates `[3, 2]` can be described 
 this way: $\begin{bmatrix} 3 \\ 2 \end{bmatrix} = (3 * \hat{i}) + (2 * \hat{j})$
 
-![Vectors](vectors/vectors_span_and_basis.gif)
+![Vectors](vectors_span_and_basis.gif)
 
 ### Vector Space
 
