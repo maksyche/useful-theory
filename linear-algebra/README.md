@@ -1,5 +1,5 @@
 # Linear Algebra
-* [Vectors](#vectors)
+* [Introduction to Vectors](#introduction-to-vectors)
     * [Vector Magnitude and Direction](#vector-magnitude-and-direction)
     * [Vector Addition](#vector-addition)
     * [Vector Scalar Multiplication](#vector-scalar-multiplication)
@@ -8,7 +8,7 @@
     * [Vector Span and Basis](#vector-span-and-basis)
     * [Vector Space](#vector-space)
 
-## Vectors
+## Introduction to Vectors
 
 ![Vectors](vectors/vectors.gif)
 
