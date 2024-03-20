@@ -7,6 +7,7 @@
     * [Vector Linear Dependence](#vector-linear-dependence)
     * [Vector Span and Basis](#vector-span-and-basis)
     * [Vector Space](#vector-space)
+    * [Vectors Dot Product](#vectors-dot-product)
 
 ## Introduction to Vectors
 
@@ -19,20 +20,29 @@ can be applied to all of them.
 
 ### Vector Magnitude and Direction
 
-The **magnitude of a vector** ( $||\vec{a}||$ ) is the distance from the endpoint of the vector to the origin. It's a
-number that represents the length of the vector independent of the direction. To calculate the magnitude of a vector we
-can use the [Pythagorean theorem](https://en.wikipedia.org/wiki/Pythagorean_theorem):
-$`||\vec{a}||=\sqrt{x_{a}^2 + y_{a}^2}`$.
+The **magnitude of a vector** ( $|\vec{a}|$ ) is the distance from the endpoint of the vector to the origin. It's a
+number that represents the length of the vector independent of the direction. To calculate the magnitude of a vector, 
+we can use the [Pythagorean theorem](https://en.wikipedia.org/wiki/Pythagorean_theorem):
+
+```math
+|\vec{a}|=\sqrt{a_{x}^2 + a_{y}^2}
+```
 
 A **unit (normalized) vector** ( $\hat{a}$ ), on the other hand, represents the direction of the vector independent of
 its length.
 The magnitude of a unit vector is always 1. To calculate the unit vector of any vector, we take the original vector and
 divide it by its magnitude:
-$`\hat{a} = \frac{\vec{a}}{||\vec{a}||}`$.
+
+```math
+\hat{a} = \frac{\vec{a}}{|\vec{a}|}
+```
 
 We can use these two components to re-create the original vector by multiplying the unit vector by the length of the
 original vector:
-$`\vec{a} = \hat{a} * ||\vec{a}||`$.
+
+```math
+\vec{a} = \hat{a} * |\vec{a}|
+```
 
 ![Vectors](vectors_magnitude_direction.gif)
 
@@ -45,7 +55,10 @@ sits on the tip of the first one. The sum is a vector drawn from the origin to t
 draw the result vector from the origin to the tail of the smaller vector.
 
 Numerically, we add/subtract vectors **component by component**:
-$`\vec{c} = \vec{a} + \vec{b} = \begin{bmatrix} x_{a} + x_{b} \\ y_{a} + y_{b} \end{bmatrix}`$
+
+```math
+\vec{c} = \vec{a} + \vec{b} = \begin{bmatrix} a_{x} + b_{y} \\ a_{x} + b_{y} \end{bmatrix}
+```
 
 ![Vectors](vectors_addition.gif)
 
@@ -55,7 +68,10 @@ Graphically, we **multiply a vector by a number (scalar)** to either stretch or 
 Multiplying a vector by a negative number also **flips its direction**.
 
 Numerically, we multiply/divide every **vector's component by the number**:
-$`\vec{a} * c = \begin{bmatrix} x_{a} * c \\ y_{a} * c \end{bmatrix}`$
+
+```math
+\vec{a} * c = \begin{bmatrix} a_{x} * c \\ a_{y} * c \end{bmatrix}
+```
 
 ![Vectors](vectors_number_multiplication.gif)
 
@@ -70,7 +86,11 @@ and $c_{2}$ are some constants.
 
 Vectors are said to be **linearly dependent** if there exists a nontrivial (where scalars are not all zero)
 [linear combination](#vector-linear-combination) of the vectors that equals the zero vector:
-$`c_{1}\vec{v_{1}} + c_{2}\vec{v_{2}} + ... + c_{n}\vec{v_{n}} = 0`$.
+
+```math
+c_{1}\vec{v_{1}} + c_{2}\vec{v_{2}} + ... + c_{n}\vec{v_{n}} = 0
+```
+
 If the set of vectors is **infinite**, the vectors in it are considered to be linearly dependent if the set contains a
 **finite subset that is linearly dependent**.
 
@@ -87,9 +107,13 @@ The **span** of vectors is the set of all their [linear combinations](#vector-li
 [vector space](#vector-space) is a set of linearly independent vectors that **span** the full space. For example, by
 using linear combinations of any two linearly independent vectors, we can create any vector in the 2D space.
 
-The **basis** vectors in the $x,y$ coordinate system are vectors $\hat{i},\hat{j}$ (i-hat and j-hat). We can use these 
-basis vectors to describe any other vector of 2D space. For example a vector with coordinates `[3, 2]` can be described 
-this way: $\begin{bmatrix} 3 \\ 2 \end{bmatrix} = (3 * \hat{i}) + (2 * \hat{j})$
+The **basis** vectors in the $x,y$ coordinate system are vectors $\hat{i},\hat{j}$ (i-hat and j-hat). We can use these
+basis vectors to describe any other vector of 2D space. For example a vector with coordinates `[3, 2]` can be described
+this way:
+
+```math
+\begin{bmatrix} 3 \\ 2 \end{bmatrix} = (3 * \hat{i}) + (2 * \hat{j})
+```
 
 ![Vectors](vectors_span_and_basis.gif)
 
@@ -118,3 +142,41 @@ To have a vector space, the **eight following axioms must be satisfied**:
   $`a(\vec{v} + \vec{u}) = a\vec{v} + a\vec{u}`$;
 - Distributivity of scalar multiplication with respect to field addition:
   $`(a + b)\vec{v} = a\vec{v} + b\vec{v}`$.
+
+### Vectors Dot Product
+
+Numerically, the dot product can be calculated by multiplying vectors component-by-component and then adding the 
+results:
+
+```math
+$`\vec{a} \cdot \vec{b} = \begin{bmatrix} a_{x} \\ a_{y} \end{bmatrix} \cdot 
+\begin{bmatrix} b_{x} \\ b_{y} \end{bmatrix} = a_{x} * b_{x} + a_{y} + b_{y}
+```
+
+The result of dot product is **always a scalar**.
+
+This formula can be extended to work with **N-dimensional** vectors, but **can't be used with more than two vectors**:
+
+```math
+\vec{a} \cdot \vec{b} = \sum_{i=1}^N a_{i} * b_{i}
+```
+
+Geometrically, we can calculate dot product using another formula, which comes from the 
+[Law of Cosines](https://en.wikipedia.org/wiki/Law_of_cosines):
+
+```math
+\vec{a} \cdot \vec{b} = |\vec{a}| * |\vec{b}| * \cos(\alpha)
+```
+
+The purpose of the dot product is to give us useful **information about angles and lengths simultaneously**. For 
+example, we use the dot product to calculate the work $W$ produced by a force $\vec{F}$ and caused the displacement
+$\vec{s}$:
+
+![Vectors](vectors_dot_product_work.gif)
+
+In some cases, we don't care about the length, we only care about how much vectors are **pointing in the same 
+direction**. In this case, it's a lot easier to work with unit vectors. The dot product of two unit vectors equals 
+**the cosine value of the angle between them**. There are three most important angles for cosine: $0^{\circ}$ where 
+cosine equals 1, $90^{\circ}$ where cosine equals 0 and $180^{\circ}$ where cosine equals -1.
+
+![Vectors](vectors_dot_product_unit.gif)

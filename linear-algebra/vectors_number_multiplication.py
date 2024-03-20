@@ -11,10 +11,11 @@ class MyScene(Scene):
             # X/Y ration should always be 16/9, but with some space after the last tick:
             # 17.6/9.9
             # 12.8/7.2
-            # 12.8/7.2
             # 9.6/5.4
             # 6.4/3.6
+            # 4.8/2.7
             # 3.2/1.8
+            # 2.4/1.35
             # 1.6/0.9
             x_range=(-2.8, 10),
             y_range=(-2.2, 5),
