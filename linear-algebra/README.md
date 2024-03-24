@@ -1,4 +1,5 @@
 # Linear Algebra
+
 * [Introduction to Vectors](#introduction-to-vectors)
     * [Vector Magnitude and Direction](#vector-magnitude-and-direction)
     * [Vector Addition](#vector-addition)
@@ -7,7 +8,10 @@
     * [Vector Linear Dependence](#vector-linear-dependence)
     * [Vector Span and Basis](#vector-span-and-basis)
     * [Vector Space](#vector-space)
-    * [Vectors Dot Product](#vectors-dot-product)
+    * [Vector Dot Product](#vector-dot-product)
+    * [Vector Cross Product](#vector-cross-product)
+    * [Calculating Angles Between Vectors](#calculating-angles-between-vectors)
+* [Introduction to Matrices](#introduction-to-matrices)
 
 ## Introduction to Vectors
 
@@ -21,7 +25,7 @@ can be applied to all of them.
 ### Vector Magnitude and Direction
 
 The **magnitude of a vector** ( $|\vec{a}|$ ) is the distance from the endpoint of the vector to the origin. It's a
-number that represents the length of the vector independent of the direction. To calculate the magnitude of a vector, 
+number that represents the length of the vector independent of the direction. To calculate the magnitude of a vector,
 we can use the [Pythagorean theorem](https://en.wikipedia.org/wiki/Pythagorean_theorem):
 
 ```math
@@ -107,9 +111,9 @@ The **span** of vectors is the set of all their [linear combinations](#vector-li
 [vector space](#vector-space) is a set of linearly independent vectors that **span** the full space. For example, by
 using linear combinations of any two linearly independent vectors, we can create any vector in the 2D space.
 
-The **basis** vectors in the $x,y$ coordinate system are vectors $\hat{i},\hat{j}$ (i-hat and j-hat). We can use these
-basis vectors to describe any other vector of 2D space. For example a vector with coordinates `[3, 2]` can be described
-this way:
+The **basis** vectors in the $x,y,z$ coordinate system are vectors $\hat{i},\hat{j},\hat{k}$ (i-hat, j-hat, and k-hat).
+We can use these basis vectors to describe any other vector of 2D/3D space. For example a vector with coordinates
+`[3, 2]` can be described this way:
 
 ```math
 \begin{bmatrix} 3 \\ 2 \end{bmatrix} = (3 * \hat{i}) + (2 * \hat{j})
@@ -143,13 +147,13 @@ To have a vector space, the **eight following axioms must be satisfied**:
 - Distributivity of scalar multiplication with respect to field addition:
   $`(a + b)\vec{v} = a\vec{v} + b\vec{v}`$.
 
-### Vectors Dot Product
+### Vector Dot Product
 
-Numerically, the dot product can be calculated by multiplying vectors component-by-component and then adding the 
+Numerically, the dot product can be calculated by multiplying vectors component-by-component and then adding the
 results:
 
 ```math
-$`\vec{a} \cdot \vec{b} = \begin{bmatrix} a_{x} \\ a_{y} \end{bmatrix} \cdot 
+\vec{a} \cdot \vec{b} = \begin{bmatrix} a_{x} \\ a_{y} \end{bmatrix} \cdot 
 \begin{bmatrix} b_{x} \\ b_{y} \end{bmatrix} = a_{x} * b_{x} + a_{y} + b_{y}
 ```
 
@@ -161,22 +165,83 @@ This formula can be extended to work with **N-dimensional** vectors, but **can't
 \vec{a} \cdot \vec{b} = \sum_{i=1}^N a_{i} * b_{i}
 ```
 
-Geometrically, we can calculate dot product using another formula, which comes from the 
+Geometrically, we can calculate dot product using another formula, which comes from the
 [Law of Cosines](https://en.wikipedia.org/wiki/Law_of_cosines):
 
 ```math
-\vec{a} \cdot \vec{b} = |\vec{a}| * |\vec{b}| * \cos(\alpha)
+\vec{a} \cdot \vec{b} = |\vec{a}| * |\vec{b}| * \cos(\theta)
 ```
 
-The purpose of the dot product is to give us useful **information about angles and lengths simultaneously**. For 
+The purpose of the dot product is to give us useful **information about angles and lengths simultaneously**. For
 example, we use the dot product to calculate the work $W$ produced by a force $\vec{F}$ and caused the displacement
 $\vec{s}$:
 
 ![Vectors](vectors_dot_product_work.gif)
 
-In some cases, we don't care about the length, we only care about how much vectors are **pointing in the same 
-direction**. In this case, it's a lot easier to work with unit vectors. The dot product of two unit vectors equals 
-**the cosine value of the angle between them**. There are three most important angles for cosine: $0^{\circ}$ where 
+In some cases, we don't care about the length, we only care about how much vectors are **pointing in the same
+direction**. In this case, it's a lot easier to work with unit vectors. The dot product of two unit vectors equals
+**the cosine value of the angle between them**. There are three most important angles for cosine: $0^{\circ}$ where
 cosine equals 1, $90^{\circ}$ where cosine equals 0 and $180^{\circ}$ where cosine equals -1.
 
 ![Vectors](vectors_dot_product_unit.gif)
+
+### Vector Cross Product
+
+Let's start with 3D geometric representation first. The **cross product of two
+[linearly independent](#vector-linear-dependence) vectors $\vec{a}\times\vec{b}$ is a vector**, which is perpendicular
+to both $\vec{a}$ and $\vec{b}$, and thus normal to the plane containing them. This vector can be calculated using this
+formula:
+
+```math
+\vec{a} \times \vec{b} = \hat{n} |\vec{a}|| \vec{b}| \sin\theta
+```
+
+where $\hat{n}$ is the unit vector perpendicular to both $\vec{a}$ and $\vec{b}$, and $\theta$ is the angle between
+$\vec{a}$ and $\vec{b}$.
+
+![Vectors](vectors_cross_product.gif)
+
+The cross product of vectors in 2D space is not exactly defined. But its magnitude can still be calculated. **The
+magnitude of the cross product equals the area of a parallelogram with the vectors for sides**. The result of the cross
+product for two vectors in **2D space $|\vec{a} \times \vec{b}|$ is a scalar, which represents the area of this
+parallelogram**.
+
+Unlike the [dot product](#vector-dot-product), the cross product says **how different vectors are**, but with a nuance.
+The cross product of two vectors is the biggest when they are **perpendicular to each other**.
+
+![Vectors](vectors_cross_product_unit.gif)
+
+Also, pay attention that the cross product is **anticommutative**:
+
+```math
+\vec{a} \times \vec{b} = -\vec{b} \times \vec{a}
+```
+
+The cross product is commonly used in computer graphics to calculate **the normal for a triangle or polygon** or in
+physics to calculate **angular momentum and torque**.
+
+Finally, let's calculate the cross product of two vectors numerically, using their components. The cross product can be
+expressed in [matrix notation](#introduction-to-matrices) as a [formal determinant](#matrix-determinant):
+
+```math
+\vec{a} \times \vec{b} = \begin{vmatrix}
+\hat{i} & \hat{j} & \hat{k} \\
+a_1 & a_2 & a_3 \\
+b_1 & b_2 & b_3
+\end{vmatrix} = (a_2b_3-a_3b_2)\hat{i} + (a_3b_1-a_1b_3)\hat{j}+(a_1b_2-a_2b_1)\hat{k}
+```
+
+### Calculating Angles Between Vectors
+
+Geometrical representation of both [dot product](#vector-dot-product) and [cross product](#vector-cross-product) can be
+used to **calculate an angle between two vectors**:
+
+```math
+\theta = \arccos \frac{\vec{a} \cdot \vec{b}}{|\vec{a}||\vec{b}|}
+```
+
+```math
+\theta = \arcsin \frac{|\vec{a} \times \vec{b}|}{|\vec{a}||\vec{b}|}
+```
+
+## Introduction to Matrices

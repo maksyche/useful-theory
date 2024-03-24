@@ -56,13 +56,13 @@ class MyScene(Scene):
                           .shift(np.array([0.5, 0, 0])))
 
         angle = Angle(vector_s, vector_f, radius=1, color=YELLOW)
-        angle_label = (MathTex("\\alpha", color=YELLOW)
+        angle_label = (MathTex("\\theta", color=YELLOW)
                        .next_to(angle, direction=RIGHT, buff=0.1)
                        .shift(np.array([-0.1, 0.15, 0])))
 
         rectangle = Rectangle(height=0.5, width=1).move_to(plane.get_origin())
 
-        math_text = MathTex("W = |\\vec{F}| * |\\vec{s}| * \\cos(\\alpha)").next_to(plane, direction=UP, buff=-1)
+        math_text = MathTex("W = |\\vec{F}| * |\\vec{s}| * \\cos\\theta").next_to(plane, direction=UP, buff=-1)
 
         group = VGroup(vector_f, vector_f_label, vector_s, vector_s_label, rectangle, angle, angle_label)
         group.shift(np.array([0, 0.3, 0])).shift(np.array([-1.5, 0, 0]))

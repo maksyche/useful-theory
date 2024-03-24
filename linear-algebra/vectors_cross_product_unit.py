@@ -48,15 +48,22 @@ class MyScene(Scene):
         vector_b = plane.get_vector(np.array(vector_b_coords), color=BLUE)
         vector_b_label = MathTex(r"\hat{b}", color=BLUE).next_to(vector_b, direction=DOWN, buff=0)
 
+        parallelogram = Polygon(
+            vector_a.get_start(), vector_a.get_end(),
+            # A hack because of the scaled and shifted plane
+            vector_a.get_end() + np.array([vector_a.get_length(), 0, 0]), vector_b.get_end(),
+            color=YELLOW, fill_color=YELLOW, fill_opacity=0.5, stroke_opacity=0.5
+        )
+
         theta_tracker = ValueTracker(0)
 
-        math_text = (MathTex(r"\hat{a} \cdot \hat{b} = |\hat{a}| * |\hat{b}| * \cos\theta =  1 * 1 * \cos"
+        math_text = (MathTex(r"|\hat{a} \times \hat{b}| = |\hat{a}| * |\hat{b}| * \sin(\theta) =  1 * 1 * \sin"
                              + str(round(theta_tracker.get_value()))
                              + r"^{\circ} = "
-                             + str(round(np.cos(theta_tracker.get_value() * DEGREES), 2)))
+                             + str(round(np.sin(theta_tracker.get_value() * DEGREES), 2)))
                      .next_to(plane, direction=UP, buff=2))
 
-        self.add(vector_a, vector_b, vector_a_label, vector_b_label, math_text)
+        self.add(vector_a, vector_b, vector_a_label, vector_b_label, parallelogram, math_text)
 
         # Required to calculate rotations against the default location
         vector_a_copy = vector_a.copy()
@@ -76,23 +83,29 @@ class MyScene(Scene):
         )
         math_text.add_updater(
             lambda x: x.become(
-                MathTex(r"\hat{a} \cdot \hat{b} = |\hat{a}| * |\hat{b}| * \cos\theta =  1 * 1 * \cos"
+                MathTex(r"|\hat{a} \times \hat{b}| = |\hat{a}| * |\hat{b}| * \sin\theta =  1 * 1 * \sin"
                         + str(round(theta_tracker.get_value()))
-                        + r"^{\circ} = "
-                        + str(round(np.cos(theta_tracker.get_value() * DEGREES), 2)))
+                        + "^{\\circ} = "
+                        + str(round(np.sin(theta_tracker.get_value() * DEGREES), 2)))
                 .next_to(plane, direction=UP, buff=2)
+            )
+        )
+        parallelogram.add_updater(
+            lambda x: x.become(Polygon(
+                vector_a.get_start(), vector_a.get_end(),
+                # A hack because of the scaled and shifted plane
+                vector_a.get_end() + np.array([vector_a.get_length(), 0, 0]), vector_b.get_end(),
+                color=YELLOW, fill_color=YELLOW, fill_opacity=0.5, stroke_opacity=0.5)
             )
         )
 
         # A hack with value=0.1. Angles don't work if set to 0
         self.play(theta_tracker.animate().set_value(0.1))
-
         theta = Angle.from_three_points(
             vector_a.get_end(), plane.get_origin(), vector_b.get_end(),
             other_angle=True, color=YELLOW
         )
         self.add(theta)
-
         theta.add_updater(
             lambda x: x.become(
                 Angle.from_three_points(

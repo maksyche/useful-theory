@@ -60,8 +60,8 @@ class MyScene(Scene):
         ).next_to(vector_c.get_end(), direction=RIGHT, buff=0.2))
         vector_c_label = MathTex("\\vec{c}", color=YELLOW).next_to(vector_c, direction=DOWN, buff=-0.7)
 
-        math_text_dependent = MathTex("\\vec{a},\\vec{b}\\; are\\; linearly\\; dependent")
-        math_text_independent = MathTex("\\vec{a},\\vec{c}\\; are\\; linearly\\; independent")
+        math_text_dependent = MathTex("\\vec{a},\\vec{b}\\text{ are linearly dependent}")
+        math_text_independent = MathTex("\\vec{a},\\vec{c}\\text{ are linearly independent}")
         (VGroup(math_text_dependent, math_text_independent)
          .arrange(DOWN).next_to(vector_a, direction=LEFT, buff=0.5))
 
