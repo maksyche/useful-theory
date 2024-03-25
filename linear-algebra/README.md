@@ -22,6 +22,18 @@ direction, etc. More abstractly, a vector is simply an element of a [vector spac
 things are gathered under the common name of vector because, for certain types of questions, a common way of reasoning
 can be applied to all of them.
 
+A vector can be written in matrix notation:
+
+```math
+\vec{a} = 
+\begin{bmatrix} 
+a_{1}   \\ 
+a_{2}   \\
+\cdots  \\
+a_{n}
+\end{bmatrix}
+```
+
 ### Vector Magnitude and Direction
 
 The **magnitude of a vector** ( $|\vec{a}|$ ) is the distance from the endpoint of the vector to the origin. It's a
@@ -255,3 +267,18 @@ used to **calculate an angle between two vectors**:
 ```
 
 ## Introduction to Matrices
+
+A matrix is a collection of numbers, just like a vector. The difference is that a matrix is a table of numbers rather
+than a list. We can think of vectors as matrices that have only one column/row.
+
+A real matrix $A \in \mathbb{R}^{m \times n}$ with $m$ rows and $n$ columns can be written as:
+
+```math
+A = 
+\begin{bmatrix} 
+a_{1,1} & a_{1,2} & \cdots & a_{1,n} \\
+a_{2,1} & a_{2,2} & \cdots & a_{2,n} \\
+\vdots  & \vdots  & \ddots & \vdots  \\
+a_{m,1} & a_{m,2} & \cdots & a_{m,n} 
+\end{bmatrix}
+```
