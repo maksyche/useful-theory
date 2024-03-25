@@ -123,10 +123,10 @@ We can use these basis vectors to describe any other vector of 2D/3D space. For 
 
 ### Vector Space
 
-A **vector space**, simplified, is a collection of vectors, along with two defined operations you can do on them:
-[vector addition](#vector-addition) and [scalar multiplication](#vector-scalar-multiplication). Vector spaces are
-characterized by their dimension, which specifies the maximum number of
-[linearly independent](#vector-linear-dependence) vectors in the space.
+A **vector space $\mathbb{V}$**, simplified, is a collection of vectors, along with two defined operations you can do
+on them: [vector addition](#vector-addition) and [scalar multiplication](#vector-scalar-multiplication).
+Vector spaces are characterized by their dimension, which specifies the maximum number
+of [linearly independent](#vector-linear-dependence) vectors in the space.
 
 To have a vector space, the **eight following axioms must be satisfied**:
 
@@ -146,6 +146,16 @@ To have a vector space, the **eight following axioms must be satisfied**:
   $`a(\vec{v} + \vec{u}) = a\vec{v} + a\vec{u}`$;
 - Distributivity of scalar multiplication with respect to field addition:
   $`(a + b)\vec{v} = a\vec{v} + b\vec{v}`$.
+
+Usually, we work with **real vector spaces $\mathbb{R}^n$** and **finite dimensions $n$**. A real vector space is a
+vector space whose field of scalars is the field of [reals](https://en.wikipedia.org/wiki/Real_number) $\mathbb{R}$.
+
+A [field](https://en.wikipedia.org/wiki/Field_mathematics) $\mathbb{F}$, simply speaking, is a set on which addition,
+subtraction, multiplication, and division are defined such that the usual rules of algebra hold. The rules for fields
+are more restrictive than ones for vector spaces (for example,
+[multiplicative inverse](https://en.wikipedia.org/wiki/Multiplicative_inverse) is not explicitly defined for vectors
+but is one of the field axioms). Thus, as a special case, a field is also a vector space over itself (for example,
+$\mathbb{R}^n$ where $n=1$).
 
 ### Vector Dot Product
 
