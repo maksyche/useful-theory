@@ -135,10 +135,10 @@ using linear combinations of any two linearly independent vectors, we can create
 
 The **basis** vectors in the $x,y,z$ coordinate system are vectors $\hat{i},\hat{j},\hat{k}$ (i-hat, j-hat, and k-hat).
 We can use these basis vectors to describe any other vector of 2D/3D space. For example a vector with coordinates
-`[3, 2]` can be described this way:
+`[1.5, 0.5]` can be described this way:
 
 ```math
-\begin{bmatrix} 3 \\ 2 \end{bmatrix} = (3 * \hat{i}) + (2 * \hat{j})
+\begin{bmatrix} 1.5 \\ 0.5 \end{bmatrix} = (1.5 * \hat{i}) + (0.5 * \hat{j})
 ```
 
 ![Vectors](vectors_span_and_basis.gif)

@@ -41,12 +41,18 @@ class MyScene(Scene):
         # The scene itself
         vector_i_coords = np.array([1, 0, 0])
         vector_i = plane.get_vector(np.array(vector_i_coords), color=RED)
-        vector_i_label = MathTex("\\hat{i}", color=RED).next_to(vector_i, direction=UP, buff=0.05)
+        vector_i_label = MathTex(r"\hat{i}", color=RED).next_to(vector_i, direction=DOWN, buff=0.05)
 
         vector_j_coords = np.array([0, 1, 0])
         vector_j = plane.get_vector(np.array(vector_j_coords), color=BLUE)
-        vector_j_label = MathTex("\\hat{j}", color=BLUE).next_to(vector_j, direction=LEFT, buff=0.1)
+        vector_j_label = MathTex(r"\hat{j}", color=BLUE).next_to(vector_j, direction=LEFT, buff=0.1)
+
+        vector_v_coords = np.array([1.5, 0.5, 0])
+        vector_v = plane.get_vector(np.array(vector_v_coords), color=YELLOW)
+        vector_v_coords_label = (MathTex(r"\begin{bmatrix} 1.5 \\ 0.5 \end{bmatrix}")
+                                 .next_to(vector_v.get_end(), direction=RIGHT, buff=0.1))
 
         self.play(Create(vector_i), Create(vector_j))
         self.play(Write(vector_i_label), Write(vector_j_label))
+        self.play(Create(vector_v), Write(vector_v_coords_label))
         self.wait(0.5)
