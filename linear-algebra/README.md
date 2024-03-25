@@ -44,10 +44,13 @@ we can use the [Pythagorean theorem](https://en.wikipedia.org/wiki/Pythagorean_t
 |\vec{a}|=\sqrt{a_{x}^2 + a_{y}^2}
 ```
 
+```math
+|\vec{a}|=\sqrt{a_{x}^2 + a_{y}^2 + a_{z}^2}
+```
+
 A **unit (normalized) vector** ( $\hat{a}$ ), on the other hand, represents the direction of the vector independent of
-its length.
-The magnitude of a unit vector is always 1. To calculate the unit vector of any vector, we take the original vector and
-divide it by its magnitude:
+its length. The magnitude of a unit vector is always 1. To calculate the unit vector of any vector, we take the
+original vector and divide it by its magnitude:
 
 ```math
 \hat{a} = \frac{\vec{a}}{|\vec{a}|}
@@ -73,7 +76,11 @@ draw the result vector from the origin to the tail of the smaller vector.
 Numerically, we add/subtract vectors **component by component**:
 
 ```math
-\vec{c} = \vec{a} + \vec{b} = \begin{bmatrix} a_{x} + b_{y} \\ a_{x} + b_{y} \end{bmatrix}
+\vec{c} = \vec{a} + \vec{b} = \begin{bmatrix} a_{x} + b_{x} \\ a_{y} + b_{y} \end{bmatrix}
+```
+
+```math
+\vec{c} = \vec{a} + \vec{b} = \begin{bmatrix} a_{x} + b_{x} \\ a_{y} + b_{y} \\ a_{z} + b_{z} \end{bmatrix}
 ```
 
 ![Vectors](vectors_addition.gif)
@@ -87,6 +94,9 @@ Numerically, we multiply/divide every **vector's component by the number**:
 
 ```math
 \vec{a} * c = \begin{bmatrix} a_{x} * c \\ a_{y} * c \end{bmatrix}
+```
+```math
+\vec{a} * c = \begin{bmatrix} a_{x} * c \\ a_{y} * c \\ a_{z} * c \end{bmatrix}
 ```
 
 ![Vectors](vectors_number_multiplication.gif)
