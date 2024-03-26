@@ -99,7 +99,7 @@ Numerically, we multiply/divide every **vector's component by the number**:
 \vec{a} * c = \begin{bmatrix} a_{x} * c \\ a_{y} * c \\ a_{z} * c \end{bmatrix}
 ```
 
-![Vectors](vectors_number_multiplication.gif)
+![Vectors](vectors_scalar_multiplication.gif)
 
 ### Vector Linear Combination
 

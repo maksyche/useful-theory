@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 from manim import *  # 0.18.0
 
+config.background_color = ManimColor("#0e1116")
+
 
 class MyScene(Scene):
     def construct(self):
@@ -48,7 +50,8 @@ class MyScene(Scene):
 
         vector_minus_squish_coords = np.multiply(vector_a_coords, -0.8)
         vector_minus_squish = plane.get_vector(np.array(vector_minus_squish_coords), color=BLUE)
-        vector_minus_squish_label = MathTex("-0.8\\vec{a}", color=BLUE).next_to(vector_minus_squish, direction=DOWN, buff=0)
+        vector_minus_squish_label = MathTex("-0.8\\vec{a}", color=BLUE).next_to(vector_minus_squish, direction=DOWN,
+                                                                                buff=0)
         vector_minus_squish_coord_label = (MathTex(
             "\\begin{bmatrix}" + str(vector_minus_squish_coords[0]) + " \\\\ "
             + str(vector_minus_squish_coords[1]) + " \\end{bmatrix}",
@@ -58,7 +61,8 @@ class MyScene(Scene):
         vector_stretch = plane.get_vector(np.array(vector_stretch_coords), color=RED)
         vector_stretch_label = MathTex("2.5\\vec{a}", color=RED).next_to(vector_stretch, direction=UP, buff=-0.9)
         vector_stretch_coord_label = (MathTex(
-            "\\begin{bmatrix}" + str(vector_stretch_coords[0]) + " \\\\ " + str(vector_stretch_coords[1]) + " \\end{bmatrix}",
+            "\\begin{bmatrix}" + str(vector_stretch_coords[0]) + " \\\\ " + str(
+                vector_stretch_coords[1]) + " \\end{bmatrix}",
         ).next_to(vector_stretch.get_end(), direction=RIGHT, buff=0.2))
 
         math_text_vector_mult_minus_squish_calc = MathTex(

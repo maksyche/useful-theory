@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 from manim import *  # 0.18.0
 
+config.background_color = ManimColor("#0e1116")
+
 
 class MyScene(ThreeDScene):
     def construct(self):

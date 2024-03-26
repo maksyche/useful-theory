@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 from manim import *  # 0.18.0
 
+config.background_color = ManimColor("#0e1116")
+
 
 class MyScene(Scene):
     def construct(self):
-
         # Defaults
         MathTex.set_default(font_size=36)
 
@@ -64,9 +65,9 @@ class MyScene(Scene):
             "\\vec{c} = "
             "\\begin{bmatrix}" + str(vector_a_coords[0]) + " \\\\ "
             + str(vector_a_coords[1]) + " \\end{bmatrix} + "
-            "\\begin{bmatrix}" + str(vector_b_coords[0]) + " \\\\ "
+                                        "\\begin{bmatrix}" + str(vector_b_coords[0]) + " \\\\ "
             + str(vector_b_coords[1]) + " \\end{bmatrix} = "
-            "\\begin{bmatrix}" + str(vector_c_coords[0]) + " \\\\ "
+                                        "\\begin{bmatrix}" + str(vector_c_coords[0]) + " \\\\ "
             + str(vector_c_coords[1]) + " \\end{bmatrix}"
         )
         (VGroup(math_text_vector_addition, math_text_vector_addition_calc)
