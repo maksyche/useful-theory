@@ -1,5 +1,4 @@
 # Linear Algebra
-
 * [Introduction to Vectors](#introduction-to-vectors)
     * [Vector Magnitude and Direction](#vector-magnitude-and-direction)
     * [Vector Addition](#vector-addition)
@@ -12,6 +11,10 @@
     * [Vector Cross Product](#vector-cross-product)
     * [Calculating Angles Between Vectors](#calculating-angles-between-vectors)
 * [Introduction to Matrices](#introduction-to-matrices)
+    * [Matrix Addition](#matrix-addition)
+    * [Matrix Multiplication](#matrix-multiplication)
+* [Linear Transformation](#linear-transformation)
+    * [Linear Transformation Composition](#linear-transformation-composition)
 
 ## Introduction to Vectors
 
@@ -95,6 +98,7 @@ Numerically, we multiply/divide every **vector's component by the number**:
 ```math
 \vec{a} * c = \begin{bmatrix} a_{x} * c \\ a_{y} * c \end{bmatrix}
 ```
+
 ```math
 \vec{a} * c = \begin{bmatrix} a_{x} * c \\ a_{y} * c \\ a_{z} * c \end{bmatrix}
 ```
@@ -292,3 +296,115 @@ a_{2,1} & a_{2,2} & \cdots & a_{2,n} \\
 a_{m,1} & a_{m,2} & \cdots & a_{m,n} 
 \end{bmatrix}
 ```
+
+### Matrix Addition
+
+To add/subtract matrices, they have to be the same size:
+
+```math
+A + B = 
+\begin{bmatrix} 
+a_{1,1} & a_{1,2} \\
+a_{2,1} & a_{2,2} 
+\end{bmatrix} + 
+\begin{bmatrix} 
+b_{1,1} & b_{1,2} \\
+b_{2,1} & b_{2,2} 
+\end{bmatrix} = 
+\begin{bmatrix} 
+a_{1,1} + b_{1,1} & a_{1,2} + b_{1,2} \\
+a_{2,1} + b_{2,1} & a_{2,2} + b_{2,2} 
+\end{bmatrix}
+```
+
+### Matrix Multiplication
+
+```math
+AB = 
+\begin{bmatrix} 
+a_{1,1} & a_{1,2} \\
+a_{2,1} & a_{2,2} 
+\end{bmatrix} \cdot 
+\begin{bmatrix} 
+b_{1,1} & b_{1,2} \\
+b_{2,1} & b_{2,2} 
+\end{bmatrix} = 
+\begin{bmatrix} 
+a_{1,1} * b_{1,1} + a_{1,2} * b_{2,1} & a_{1,1} * b_{1,2} + a_{1,2} * b_{2,2} \\
+a_{2,1} * b_{1,1} + a_{2,2} * b_{2,1} & a_{2,1} * b_{1,2} + a_{2,2} * b_{2,2} 
+\end{bmatrix}
+```
+
+When multiplying/dividing matrices, they don't need to be the same size. In order to multiply two matrices $A$ and $B$,
+the number of columns of $A$ must be equal to the number of rows of $B$.
+
+```math
+AB =
+\begin{bmatrix}
+a_{1,1} & a_{1,2} \\
+a_{2,1} & a_{2,2}
+\end{bmatrix} \cdot
+\begin{bmatrix}
+b_{1,1} & b_{1,2} & b_{1,3}\\
+b_{2,1} & b_{2,2} & b_{2,3}
+\end{bmatrix} =
+\begin{bmatrix}
+a_{1,1} * b_{1,1} + a_{1,2} * b_{2,1} & a_{1,1} * b_{1,2} + a_{1,2} * b_{2,2} & a_{1,1} * b_{1,3} + a_{1,2} * b_{2,3} \\
+a_{2,1} * b_{1,1} + a_{2,2} * b_{2,1} & a_{2,1} * b_{1,2} + a_{2,2} * b_{2,2} & a_{2,1} * b_{1,3} + a_{2,2} * b_{2,3}
+\end{bmatrix}
+```
+
+## Linear Transformation
+
+Linear transformations are functions that take vectors an inputs.
+
+Numerically, this looks like a matrix-vector dot product, the result of which is a vector:
+
+```math
+A\vec{v} = 
+\begin{bmatrix}
+a_{1,1} & a_{1,2} & \ldots & a_{1,n} \\
+a_{2,1} & a_{2,2} & \ldots & a_{2,n} \\
+\vdots  & \vdots  & \ddots & \vdots \\
+a_{m,1} & a_{m,2} & \ldots & a_{m,n}
+\end{bmatrix}
+\begin{bmatrix}
+v_1\\
+v_2\\
+\vdots\\
+v_n
+\end{bmatrix}
+=
+\begin{bmatrix}
+a_{1,1}v_1+a_{1,2}v_2 + \cdots + a_{1,n} v_n\\
+a_{2,1}v_1+a_{2,2}v_2 + \cdots + a_{2,n} v_n\\
+\vdots\\
+a_{m,1}v_1+a_{m,2}v_2 + \cdots + a_{m,n} v_n
+\end{bmatrix}
+```
+
+Graphically, in 2D/3D, a vector can be stretched, squeezed, rotated, sheared, reflected, and projected onto something,
+or a mix of all/some of these. Also, the matrix columns show where unit vectors will be after the transformation is
+applied.
+
+![Linear Transformation](linear_transformation.gif)
+
+For this transformation to be linear a couple of conditions must remain true after the transformation:
+
+- All lines (even diagonal) must remain lines after the transformation;
+- Grid lines must be parallel and evenly spaced;
+- Origin must be on the same place.
+
+### Linear Transformation Composition
+
+Composition is accomplished by matrix multiplication:
+
+```math
+B(A\vec{v}) = (BA)\vec{x}
+```
+
+For example, to apply stretching and rotation matrices, we can multiply them and apply the resulting matrix. It gives
+us the same result as applying them one by one:
+
+![Linear Transformation](linear_transformation_composition.gif)
+
