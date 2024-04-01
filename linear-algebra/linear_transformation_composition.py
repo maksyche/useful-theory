@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-import numpy as np
 from manim import *  # 0.18.0
 
 config.background_color = ManimColor("#0e1116")
@@ -56,22 +55,31 @@ class MyScene(LinearTransformationScene):
         transformed_v_coords = matrix_result.dot(vector_v_coords)
 
         text = (
-            MathTex(r"A\vec{v} = \begin{bmatrix}" + str(matrix_result[0][0]) + r"&" + str(matrix_result[0][1]) + r"\\" +
+            MathTex(r"(AB)\vec{v} = "
+                    r"\Bigg(\begin{bmatrix}" + str(matrix_stretch[0][0]) + r"&" + str(matrix_stretch[0][1]) + r"\\" +
+                    str(matrix_stretch[1][0]) + r"&" + str(matrix_stretch[1][1]) + r"\end{bmatrix}" +
+
+                    r"\begin{bmatrix}" + str(matrix_rotate[0][0]) + r"&" + str(matrix_rotate[0][1]) + r"\\" +
+                    str(matrix_rotate[1][0]) + r"&" + str(matrix_rotate[1][1]) + r"\end{bmatrix}\Bigg)" +
+                    r"\begin{bmatrix}" + str(vector_v_coords[0]) + r"\\" + str(vector_v_coords[1]) + r"\end{bmatrix}=" +
+
+                    r"\begin{bmatrix}" + str(matrix_result[0][0]) + r"&" + str(matrix_result[0][1]) + r"\\" +
                     str(matrix_result[1][0]) + r"&" + str(matrix_result[1][1]) + r"\end{bmatrix}\begin{bmatrix}" +
                     str(vector_v_coords[0]) + r"\\" + str(vector_v_coords[1]) + r"\end{bmatrix} = " +
                     r"\begin{bmatrix}" + str(transformed_v_coords[0]) + r"\\" +
                     str(transformed_v_coords[1]) + r"\end{bmatrix}")
-            .shift(np.array([-4.5, 3, 0])))
+            .shift(np.array([0, -2, 0])))
         # self.add(index_labels(text[0]))  # Show text indices for easy coloring
-        text[0][1:3].set_color(YELLOW)
-        text[0][5].set_color(GREEN_C)
-        text[0][8].set_color(GREEN_C)
-        text[0][6:8].set_color(RED_C)
-        text[0][9].set_color(RED_C)
-        text[0][12:14].set_color(YELLOW)
-        text[0][17:20].set_color(ORANGE)
+        text[0][4:6].set_color(YELLOW)
+        text[0][23:25].set_color(YELLOW)
+        text[0][28].set_color(GREEN_C)
+        text[0][31].set_color(GREEN_C)
+        text[0][29:31].set_color(RED_C)
+        text[0][32].set_color(RED_C)
+        text[0][35:37].set_color(YELLOW)
+        text[0][40:43].set_color(ORANGE)
 
-        background_rectangle = BackgroundRectangle(text, color=config.background_color, fill_opacity=0.7, buff=0.1)
+        background_rectangle = BackgroundRectangle(text, color=config.background_color, fill_opacity=1, buff=0.1)
 
         self.add(background_rectangle, text)
         vector_v = self.add_vector(vector_v_coords, color=YELLOW)

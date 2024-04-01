@@ -13,8 +13,9 @@
 * [Introduction to Matrices](#introduction-to-matrices)
     * [Matrix Addition](#matrix-addition)
     * [Matrix Multiplication](#matrix-multiplication)
-* [Linear Transformation](#linear-transformation)
+* [Linear Transformations](#linear-transformations)
     * [Linear Transformation Composition](#linear-transformation-composition)
+    * [Linear Transformation Invertible](#linear-transformation-invertible)
 
 ## Introduction to Vectors
 
@@ -282,8 +283,8 @@ used to **calculate an angle between two vectors**:
 
 ## Introduction to Matrices
 
-A matrix is a collection of numbers, just like a vector. The difference is that a matrix is a table of numbers rather
-than a list. We can think of vectors as matrices that have only one column/row.
+A **matrix** is a collection of numbers, just like a vector. The difference is that a matrix is a table of numbers
+rather than a list. We can think of vectors as matrices that have only one column/row.
 
 A real matrix $A \in \mathbb{R}^{m \times n}$ with $m$ rows and $n$ columns can be written as:
 
@@ -299,7 +300,7 @@ a_{m,1} & a_{m,2} & \cdots & a_{m,n}
 
 ### Matrix Addition
 
-To add/subtract matrices, they have to be the same size:
+To add/subtract matrices, they **have to be the same size**:
 
 ```math
 A + B = 
@@ -335,8 +336,8 @@ a_{2,1} * b_{1,1} + a_{2,2} * b_{2,1} & a_{2,1} * b_{1,2} + a_{2,2} * b_{2,2}
 \end{bmatrix}
 ```
 
-When multiplying/dividing matrices, they don't need to be the same size. In order to multiply two matrices $A$ and $B$,
-the number of columns of $A$ must be equal to the number of rows of $B$.
+When **multiplying/dividing matrices, they don't need to be the same size**. In order to multiply two matrices $A$ and
+$B$, **the number of columns of $A$ must be equal to the number of rows of $B$**.
 
 ```math
 AB =
@@ -354,11 +355,11 @@ a_{2,1} * b_{1,1} + a_{2,2} * b_{2,1} & a_{2,1} * b_{1,2} + a_{2,2} * b_{2,2} & 
 \end{bmatrix}
 ```
 
-## Linear Transformation
+## Linear Transformations
 
-Linear transformations are functions that take vectors an inputs.
+**Linear transformations are functions that take vectors an inputs**.
 
-Numerically, this looks like a matrix-vector dot product, the result of which is a vector:
+Numerically, this looks like a **matrix-vector dot product, the result of which is a vector**:
 
 ```math
 A\vec{v} = 
@@ -384,12 +385,12 @@ a_{m,1}v_1+a_{m,2}v_2 + \cdots + a_{m,n} v_n
 ```
 
 Graphically, in 2D/3D, a vector can be stretched, squeezed, rotated, sheared, reflected, and projected onto something,
-or a mix of all/some of these. Also, the matrix columns show where unit vectors will be after the transformation is
+or a mix of all/some of these. Also, **the matrix columns show where unit vectors will be after the transformation** is
 applied.
 
-![Linear Transformation](linear_transformation.gif)
+![Linear Transformations](linear_transformation.gif)
 
-For this transformation to be linear a couple of conditions must remain true after the transformation:
+For this transformation to be linear, a couple of conditions must remain true after the transformation:
 
 - All lines (even diagonal) must remain lines after the transformation;
 - Grid lines must be parallel and evenly spaced;
@@ -400,11 +401,27 @@ For this transformation to be linear a couple of conditions must remain true aft
 Composition is accomplished by matrix multiplication:
 
 ```math
-B(A\vec{v}) = (BA)\vec{x}
+B(A\vec{v}) = (BA)\vec{v}
 ```
 
-For example, to apply stretching and rotation matrices, we can multiply them and apply the resulting matrix. It gives
-us the same result as applying them one by one:
+For example, to apply stretching and rotation matrices, we can **multiply them and apply the resulting matrix**. It
+gives us the same result as applying them one by one:
 
-![Linear Transformation](linear_transformation_composition.gif)
+![Linear Transformations](linear_transformation_composition.gif)
+
+### Linear Transformation Invertible
+
+A square matrix is called invertible, if the product of the matrix and its inverse is the
+[identity (or unit) matrix](https://en.wikipedia.org/wiki/Identity_matrix):
+
+```math
+AA^{-1} = I
+```
+
+In other words, an invertible matrix $A$ is a matrix for which the inverse $A^{-1}$ can be calculated. A square matrix 
+that is not invertible is called **singular** or **degenerate**. A square matrix with entries in a field is singular if 
+and only if its **determinant is zero**.
+
+![Linear Transformations](linear_transformation_invertible.gif)
+
 
