@@ -16,6 +16,7 @@
 * [Linear Transformations](#linear-transformations)
     * [Linear Transformation Composition](#linear-transformation-composition)
     * [Linear Transformation Invertible](#linear-transformation-invertible)
+    * [Linear Transformation Changing Dimensions](#linear-transformation-changing-dimensions)
 
 ## Introduction to Vectors
 
@@ -357,7 +358,12 @@ a_{2,1} * b_{1,1} + a_{2,2} * b_{2,1} & a_{2,1} * b_{1,2} + a_{2,2} * b_{2,2} & 
 
 ## Linear Transformations
 
-**Linear transformations are functions that take vectors an inputs**.
+**Linear Transformation (or Linear Map)** is a function from one vector space to another that respects the underlying 
+linear structure of each vector space.
+
+```math
+f : V \rightarrow W
+```
 
 Numerically, this looks like a **matrix-vector dot product, the result of which is a vector**:
 
@@ -418,10 +424,22 @@ A square matrix is called invertible, if the product of the matrix and its inver
 AA^{-1} = I
 ```
 
-In other words, an invertible matrix $A$ is a matrix for which the inverse $A^{-1}$ can be calculated. A square matrix 
-that is not invertible is called **singular** or **degenerate**. A square matrix with entries in a field is singular if 
+In other words, an invertible matrix $A$ is a matrix for which the inverse $A^{-1}$ can be calculated. A square matrix
+that is not invertible is called **singular** or **degenerate**. A square matrix with entries in a field is singular if
 and only if its **determinant is zero**.
 
 ![Linear Transformations](linear_transformation_invertible.gif)
 
+### Linear Transformation Changing Dimensions
+
+In linear transformations, a dimension of [codomain](https://en.wikipedia.org/wiki/Codomain) may be different from the
+dimension of [domain](https://en.wikipedia.org/wiki/Domain_of_a_function). For example, we can use a matrix with only
+one row (or just put zeros in the second row) to "reduce" the dimension of vectors from 2D to 1D:
+
+![Linear Transformations](linear_transformation_dimension_reduction.gif)
+
+The dimension of codomain $W$ may also be larger than the dimension of domain $V$.
+But the dimension of the [image (range)](https://en.wikipedia.org/wiki/Image_(mathematics)) $im(f)$ cannot be larger (I
+won't give any proofs here, just believe me or prove it yourself). So there's usually no sense in making such 
+transformations, because they "miss" most of the target space.
 
