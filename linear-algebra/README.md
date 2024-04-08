@@ -16,7 +16,8 @@
 * [Linear Transformations](#linear-transformations)
     * [Linear Transformation Composition](#linear-transformation-composition)
     * [Linear Transformation Invertible](#linear-transformation-invertible)
-    * [Linear Transformation Changing Dimensions](#linear-transformation-changing-dimensions)
+    * [Linear Transformation Dimensions](#linear-transformation-dimensions)
+    * [Linear Transformation Determinant](#linear-transformation-determinant)
 
 ## Introduction to Vectors
 
@@ -358,7 +359,7 @@ a_{2,1} * b_{1,1} + a_{2,2} * b_{2,1} & a_{2,1} * b_{1,2} + a_{2,2} * b_{2,2} & 
 
 ## Linear Transformations
 
-**Linear Transformation (or Linear Map)** is a function from one vector space to another that respects the underlying 
+**Linear Transformation (or Linear Map)** is a function from one vector space to another that respects the underlying
 linear structure of each vector space.
 
 ```math
@@ -402,6 +403,18 @@ For this transformation to be linear, a couple of conditions must remain true af
 - Grid lines must be parallel and evenly spaced;
 - Origin must be on the same place.
 
+In a square matrix, each component is responsible for different transformations. For example, in a $2 \times 2$ matrix:
+
+```math
+\begin{pmatrix}
+     a_{1,1} & a_{1,2} \\ 
+     a_{2,1} & a_{2,2}
+\end{pmatrix} 
+```
+
+$a_{1,1}$ and $a_{2,2}$ are responsible for horizontal and vertical scale respectively (use negative numbers for 
+reflexions), and $a_{2,1}$ and $a_{1,2}$ are responsible for horizontal and vertical shear.
+
 ### Linear Transformation Composition
 
 Composition is accomplished by matrix multiplication:
@@ -414,6 +427,18 @@ For example, to apply stretching and rotation matrices, we can **multiply them a
 gives us the same result as applying them one by one:
 
 ![Linear Transformations](linear_transformation_composition.gif)
+
+Interesting moment: a vector is scaled up a bit during rotations by acute angles (because we actually use both $x$ and
+$y$ shears to rotate the object), so it's important to scale it down on the same amount. The complete rotation matrix in
+2D looks like this:
+
+```math
+R =
+\begin{bmatrix}
+\cos{\theta} & -\sin{\theta} \\
+\sin{\theta} & \cos{\theta} 
+\end{bmatrix}
+```
 
 ### Linear Transformation Invertible
 
@@ -430,7 +455,10 @@ and only if its **determinant is zero**.
 
 ![Linear Transformations](linear_transformation_invertible.gif)
 
-### Linear Transformation Changing Dimensions
+### Linear Transformation Dimensions
+
+Numerically, linear transformation can be executed in any dimensions as shown in the [formula](#linear-transformations).
+But it's not easy to show the transformations graphically in dimensions other than 2D and 3D.
 
 In linear transformations, a dimension of [codomain](https://en.wikipedia.org/wiki/Codomain) may be different from the
 dimension of [domain](https://en.wikipedia.org/wiki/Domain_of_a_function). For example, we can use a matrix with only
@@ -440,6 +468,55 @@ one row (or just put zeros in the second row) to "reduce" the dimension of vecto
 
 The dimension of codomain $W$ may also be larger than the dimension of domain $V$.
 But the dimension of the [image (range)](https://en.wikipedia.org/wiki/Image_(mathematics)) $im(f)$ cannot be larger (I
-won't give any proofs here, just believe me or prove it yourself). So there's usually no sense in making such 
+won't give any proofs here, just believe me or prove it yourself). So there's usually no sense in making such
 transformations, because they "miss" most of the target space.
 
+### Linear Transformation Determinant
+
+The determinant $\det{A}$ or $|A|$ is a special number that can be calculated from a square matrix. It has a couple of 
+interesting properties:
+
+- The determinant is nonzero if and only if the matrix is invertible (for example, reducing dimensions gives zero
+  determinant);
+- The determinant shows how much a region/area is stretched or squished after the transformation (works for volumes in
+  3D);
+- The negative determinant shows that the orientation has been reversed.
+
+![Linear Transformations](linear_transformation_determinant.gif)
+
+Numerically, the determinant can be calculated using a formula:
+
+```math
+\det
+\begin{pmatrix}
+     a_{1,1} & a_{1,2} \\ 
+     a_{2,1} & a_{2,2}
+\end{pmatrix} 
+=
+\begin{vmatrix}
+     a_{1,1} & a_{1,2} \\ 
+     a_{2,1} & a_{2,2}
+\end{vmatrix} 
+= a_{1,1} a_{2,2} - a_{1,2} a_{2,1}
+```
+
+And for 3D:
+
+```math
+\det
+\begin{pmatrix}
+     a_{1,1} & a_{1,2} & a_{1,3}\\ 
+     a_{2,1} & a_{2,2} & a_{2,3}\\
+     a_{3,1} & a_{3,2} & a_{3,3} 
+\end{pmatrix} 
+=
+\begin{vmatrix}
+     a_{1,1} & a_{1,2} & a_{1,3}\\ 
+     a_{2,1} & a_{2,2} & a_{2,3}\\
+     a_{3,1} & a_{3,2} & a_{3,3} 
+\end{vmatrix}
+=
+a_{1,1}\begin{vmatrix} a_{2,2} & a_{2,3} \\ a_{3,2} & a_{3,3} \end{vmatrix} 
++ a_{1,2}\begin{vmatrix} a_{2,3} & a_{2,1} \\ a_{3,3} & a_{3,1} \end{vmatrix} 
++ a_{1,3}\begin{vmatrix} a_{2,1} & a_{2,2} \\ a_{3,1} & a_{3,2} \end{vmatrix}
+```
