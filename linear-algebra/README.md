@@ -260,7 +260,7 @@ The cross product is commonly used in computer graphics to calculate **the norma
 physics to calculate **angular momentum and torque**.
 
 Finally, let's calculate the cross product of two vectors numerically, using their components. The cross product can be
-expressed in [matrix notation](#introduction-to-matrices) as a [formal determinant](#matrix-determinant):
+expressed in [matrix notation](#introduction-to-matrices) as a [formal determinant](#linear-transformation-determinant):
 
 ```math
 \vec{a} \times \vec{b} = \begin{vmatrix}
@@ -413,7 +413,7 @@ In a square matrix, each component is responsible for different transformations.
 ```
 
 $a_{1,1}$ and $a_{2,2}$ are responsible for horizontal and vertical scale respectively (use negative numbers for 
-reflexions), and $a_{2,1}$ and $a_{1,2}$ are responsible for horizontal and vertical shear.
+reflexions), and $a_{1,2}$ and $a_{2,1}$ are responsible for horizontal and vertical shear.
 
 ### Linear Transformation Composition
 
@@ -469,11 +469,11 @@ one row (or just put zeros in the second row) to "reduce" the dimension of vecto
 The dimension of codomain $W$ may also be larger than the dimension of domain $V$.
 But the dimension of the [image (range)](https://en.wikipedia.org/wiki/Image_(mathematics)) $im(f)$ cannot be larger (I
 won't give any proofs here, just believe me or prove it yourself). So there's usually no sense in making such
-transformations, because they "miss" most of the target space.
+transformations because they "miss" most of the target space.
 
 ### Linear Transformation Determinant
 
-The determinant $\det{A}$ or $|A|$ is a special number that can be calculated from a square matrix. It has a couple of 
+The determinant $\det(A)$ or $|A|$ is a special number that can be calculated from a square matrix. It has a couple of 
 interesting properties:
 
 - The determinant is nonzero if and only if the matrix is invertible (for example, reducing dimensions gives zero
@@ -481,6 +481,8 @@ interesting properties:
 - The determinant shows how much a region/area is stretched or squished after the transformation (works for volumes in
   3D);
 - The negative determinant shows that the orientation has been reversed.
+- $\det(I) = 1
+- $\det(AB)=\det(A)\det(B)$
 
 ![Linear Transformations](linear_transformation_determinant.gif)
 
@@ -515,8 +517,9 @@ And for 3D:
      a_{2,1} & a_{2,2} & a_{2,3}\\
      a_{3,1} & a_{3,2} & a_{3,3} 
 \end{vmatrix}
-=
-a_{1,1}\begin{vmatrix} a_{2,2} & a_{2,3} \\ a_{3,2} & a_{3,3} \end{vmatrix} 
-+ a_{1,2}\begin{vmatrix} a_{2,3} & a_{2,1} \\ a_{3,3} & a_{3,1} \end{vmatrix} 
-+ a_{1,3}\begin{vmatrix} a_{2,1} & a_{2,2} \\ a_{3,1} & a_{3,2} \end{vmatrix}
+= a_{1,1}a_{2,2}a_{3,3} + a_{1,2}a_{2,3}a_{3,1} + a_{1,3}a_{2,1}a_{3,2} 
+- a_{1,3}a_{2,2}a_{3,1} - a_{1,2}a_{2,1}a_{3,3} - a_{1,1}a_{2,3}a_{3,2}
 ```
+
+The formula can be generalized for $n \times n$ matrices, but it involves permutations and their signatures and is kinda
+scary.
