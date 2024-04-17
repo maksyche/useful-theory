@@ -467,10 +467,17 @@ one row (or just put zeros in the second row) to "reduce" the dimension of vecto
 
 ![Linear Transformations](linear_transformation_dimension_reduction.gif)
 
+The set of vectors that land on the origin after such transformations is called **null space** or **the kernel** of the 
+matrix.
+
 The dimension of codomain $W$ may also be larger than the dimension of domain $V$.
 But the dimension of the [image (range)](https://en.wikipedia.org/wiki/Image_(mathematics)) $im(f)$ cannot be larger (I
 won't give any proofs here, just believe me or prove it yourself). So there's usually no sense in making such
 transformations because they "miss" most of the target space.
+
+In linear algebra, **the rank of a matrix** $rank(A)$ is the dimension of the vector space spanned by its columns (which
+show the coordinates of the basis vectors after the transformation). Simplified, it means the number of dimensions of 
+the **column space** (a set of all possible outputs for the transformation).
 
 ### Determinant
 
