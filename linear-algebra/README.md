@@ -13,11 +13,12 @@
 * [Introduction to Matrices](#introduction-to-matrices)
     * [Matrix Addition](#matrix-addition)
     * [Matrix Multiplication](#matrix-multiplication)
-* [Linear Transformations](#linear-transformations)
-    * [Linear Transformation Composition](#linear-transformation-composition)
-    * [Linear Transformation Invertible](#linear-transformation-invertible)
+    * [Linear Transformations](#linear-transformations)
+    * [Composition of Transformations](#composition-of-transformations)
+    * [Invertible and Identity Matrices](#invertible-and-identity-matrices)
     * [Linear Transformation Dimensions](#linear-transformation-dimensions)
-    * [Linear Transformation Determinant](#linear-transformation-determinant)
+    * [Determinant](#determinant)
+    * [Affine transformations](#affine-transformations)
 
 ## Introduction to Vectors
 
@@ -357,7 +358,7 @@ a_{2,1} * b_{1,1} + a_{2,2} * b_{2,1} & a_{2,1} * b_{1,2} + a_{2,2} * b_{2,2} & 
 \end{bmatrix}
 ```
 
-## Linear Transformations
+### Linear Transformations
 
 **Linear Transformation (or Linear Map)** is a function from one vector space to another that respects the underlying
 linear structure of each vector space.
@@ -412,10 +413,10 @@ In a square matrix, each component is responsible for different transformations.
 \end{pmatrix} 
 ```
 
-$a_{1,1}$ and $a_{2,2}$ are responsible for horizontal and vertical scale respectively (use negative numbers for 
+$a_{1,1}$ and $a_{2,2}$ are responsible for horizontal and vertical scale respectively (use negative numbers for
 reflexions), and $a_{1,2}$ and $a_{2,1}$ are responsible for horizontal and vertical shear.
 
-### Linear Transformation Composition
+### Composition of Transformations
 
 Composition is accomplished by matrix multiplication:
 
@@ -440,7 +441,7 @@ R =
 \end{bmatrix}
 ```
 
-### Linear Transformation Invertible
+### Invertible and Identity Matrices
 
 A square matrix is called invertible, if the product of the matrix and its inverse is the
 [identity (or unit) matrix](https://en.wikipedia.org/wiki/Identity_matrix):
@@ -471,9 +472,9 @@ But the dimension of the [image (range)](https://en.wikipedia.org/wiki/Image_(ma
 won't give any proofs here, just believe me or prove it yourself). So there's usually no sense in making such
 transformations because they "miss" most of the target space.
 
-### Linear Transformation Determinant
+### Determinant
 
-The determinant $\det(A)$ or $|A|$ is a special number that can be calculated from a square matrix. It has a couple of 
+The determinant $\det(A)$ or $|A|$ is a special number that can be calculated from a square matrix. It has a couple of
 interesting properties:
 
 - The determinant is nonzero if and only if the matrix is invertible (for example, reducing dimensions gives zero
@@ -481,7 +482,7 @@ interesting properties:
 - The determinant shows how much a region/area is stretched or squished after the transformation (works for volumes in
   3D);
 - The negative determinant shows that the orientation has been reversed.
-- $\det(I) = 1
+- $\det(I) = 1$
 - $\det(AB)=\det(A)\det(B)$
 
 ![Linear Transformations](linear_transformation_determinant.gif)
@@ -521,5 +522,55 @@ And for 3D:
 - a_{1,3}a_{2,2}a_{3,1} - a_{1,2}a_{2,1}a_{3,3} - a_{1,1}a_{2,3}a_{3,2}
 ```
 
-The formula can be generalized for $n \times n$ matrices, but it involves permutations and their signatures and is kinda
-scary.
+The formula can be generalized for $n \times n$ matrices, but it involves permutations and their signatures, and is
+kinda scary.
+
+### Affine transformations
+
+It's actually easier to think about **vectors as points in space** to visualize transformations. These points can trace
+out simple objects or even complicated shapes. The math behind these visualizations stays the same, so we can apply
+transformations to all of these points and thus, to the shape.
+
+Unlike a linear transformation, an **affine transformation** doesn't need to preserve the origin of the affine space.
+This allows us to move or even to change the perspective of the shapes.
+
+Visually, to perform an affine transformation on the 2D plane, we can perform a linear transformation in 3D with the 2D
+plane placed on the index $1$ of the $z$ axis. For example, to perform a **2D translation** along the $x$ axis you
+actually perform a **3D shear** along the $x$ axis:
+
+![Linear Transformations](linear_transformation_affine.gif)
+
+Numerically, you have to use **homogeneous coordinates**, which basically means to add an extra dimension $W$ to the
+vector (usually $W=1$):
+
+```math
+\begin{bmatrix} x \\ y \end{bmatrix} \to 
+\begin{bmatrix} x \\ y \\ w \end{bmatrix} \to
+\begin{bmatrix} x \\ y \\ 1 \end{bmatrix}
+```
+
+or for 3D:
+
+```math
+\begin{bmatrix} x \\ y \\ z \end{bmatrix} \to 
+\begin{bmatrix} x \\ y \\ z \\ w \end{bmatrix} \to
+\begin{bmatrix} x \\ y \\ z \\ 1 \end{bmatrix}
+```
+
+To match the dimensions, another **row and column must be added to the matrix** to perform a linear transformation. 
+Here's an example of 2D translation using homogenous coordinates (again, it's actually a 3D shear):
+
+```math
+\begin{bmatrix}
+     1 & 0 & d_{x}\\ 
+     0 & 1 & d_{y}\\
+     0 & 0 & 1
+\end{bmatrix} 
+\begin{bmatrix} x \\ y \\ 1 \end{bmatrix}
+=
+\begin{bmatrix} x + d_{x}\\ y + d_{y}\\ 1 \end{bmatrix}
+```
+
+A [vector addition](#vector-addition) may also be used to do translations. Using homogeneous coordinates over vector
+addition gives many advantages, such as decreasing the number of operations, combining multiple transformations and
+translations into a single matrix (don't forget that order matters), etc.
