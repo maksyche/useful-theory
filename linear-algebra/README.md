@@ -1,4 +1,5 @@
 # Linear Algebra
+
 * [Introduction to Vectors](#introduction-to-vectors)
     * [Vector Magnitude and Direction](#vector-magnitude-and-direction)
     * [Vector Addition](#vector-addition)
@@ -19,6 +20,7 @@
     * [Linear Transformation Dimensions](#linear-transformation-dimensions)
     * [Determinant](#determinant)
     * [Affine transformations](#affine-transformations)
+    * [Eigen Vectors](#eigen-vectors)
 
 ## Introduction to Vectors
 
@@ -467,7 +469,7 @@ one row (or just put zeros in the second row) to "reduce" the dimension of vecto
 
 ![Linear Transformations](linear_transformation_dimension_reduction.gif)
 
-The set of vectors that land on the origin after such transformations is called **null space** or **the kernel** of the 
+The set of vectors that land on the origin after such transformations is called **null space** or **the kernel** of the
 matrix.
 
 The dimension of codomain $W$ may also be larger than the dimension of domain $V$.
@@ -476,7 +478,7 @@ won't give any proofs here, just believe me or prove it yourself). So there's us
 transformations because they "miss" most of the target space.
 
 In linear algebra, **the rank of a matrix** $rank(A)$ is the dimension of the vector space spanned by its columns (which
-show the coordinates of the basis vectors after the transformation). Simplified, it means the number of dimensions of 
+show the coordinates of the basis vectors after the transformation). Simplified, it means the number of dimensions of
 the **column space** (a set of all possible outputs for the transformation).
 
 ### Determinant
@@ -564,7 +566,7 @@ or for 3D:
 \begin{bmatrix} x \\ y \\ z \\ 1 \end{bmatrix}
 ```
 
-To match the dimensions, another **row and column must be added to the matrix** to perform a linear transformation. 
+To match the dimensions, another **row and column must be added to the matrix** to perform a linear transformation.
 Here's an example of 2D translation using homogenous coordinates (again, it's actually a 3D shear):
 
 ```math
@@ -581,3 +583,47 @@ Here's an example of 2D translation using homogenous coordinates (again, it's ac
 A [vector addition](#vector-addition) may also be used to do translations. Using homogeneous coordinates over vector
 addition gives many advantages, such as decreasing the number of operations, combining multiple transformations and
 translations into a single matrix (don't forget that order matters), etc.
+
+### Eigen Vectors
+
+Graphically, an **eigenvector** is the vector that doesn't change the direction after the linear transformation (but can
+be **scaled** and even **flipped**):
+
+![Linear Transformations](linear_transformation_eigenvector.gif)
+
+Numerically, the eigenvector must satisfy the following equation:
+
+```math
+A\vec{v} = \lambda\vec{v} = (\lambda I)\vec{v}
+```
+
+```math
+(A - \lambda I) \vec{v} = 0
+```
+
+where $\lambda$ is an **eigenvalue**.
+
+The only way it's possible for non-zero vector $\vec{v}$ to become a zero vector if the transformation reduces
+dimensions. The [determinant](#determinant) of such transformations is always zero, so the expression above can be
+written as:
+
+```math
+\det(A - \lambda I) = 0
+```
+
+```math
+\det
+\begin{pmatrix}
+     a_{1,1} - \lambda & a_{1,2} \\ 
+     a_{2,1} & a_{2,2} - \lambda
+\end{pmatrix} = 0
+```
+
+We need to solve for which eigenvalues this expression is true. Then, put the eigenvalues into the eigenvector
+expression and find eigenvectors for which that one is true.
+
+A matrix can have multiple eigenvectors. Also, it doesn't mean that every matrix has eigenvectors. Some of them don't
+(for example, 2D rotation matrices).
+
+Eigenvectors make understanding linear transformations easy. They are used in **Computer Vision**, mathematical problems
+that can be **modeled with linear transformations**, and even **Google PagerRank** algorithm.
