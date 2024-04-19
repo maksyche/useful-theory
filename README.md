@@ -1,5 +1,6 @@
 # Useful Theory
-This is my cheatsheet for math, electronics, physics, and some other science stuff that a software/hardware engineer may require.
+This is an overview of basic math, electronics, physics, and some other science stuff that a Software/Computer Engineer 
+may require.
 
 ## Contents
 - [Calculus](calculus/README.md)
