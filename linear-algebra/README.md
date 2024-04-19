@@ -21,6 +21,7 @@
     * [Determinant](#determinant)
     * [Affine transformations](#affine-transformations)
     * [Eigen Vectors](#eigen-vectors)
+* [Linear System of Equations](#linear-system-of-equations)
 
 ## Introduction to Vectors
 
@@ -627,3 +628,71 @@ A matrix can have multiple eigenvectors. Also, it doesn't mean that every matrix
 
 Eigenvectors make understanding linear transformations easy. They are used in **Computer Vision**, mathematical problems
 that can be **modeled with linear transformations**, and even **Google PagerRank** algorithm.
+
+## Linear System of Equations
+
+A **Linear System of Equations** is a collection of one or more linear equations involving the same variables. The
+number of equations must be the same as the number of unknown variables:
+
+```math
+\begin{cases} 
+    a_{1,1}x_{1} + a_{1,2}x_{2} + \cdots + a_{1,n}x_{n}= v_{1} \\ 
+    a_{2,1}x_{1} + a_{2,2}x_{2} + \cdots + a_{2,n}x_{n}= v_{2} \\ 
+    \vdots \\
+    a_{m,1}x_{1} + a_{m,2}x_{2} + \cdots + a_{m,n}x_{n}= v_{m} \\ 
+\end{cases} 
+```
+
+The same equation can be written in a vector form:
+
+```math
+\begin{bmatrix} 
+    a_{1,1} & a_{1,2} & \cdots & a_{1,n} \\
+    a_{2,1} & a_{2,2} & \cdots & a_{2,n} \\
+    \vdots  & \vdots  & \ddots & \vdots  \\
+    a_{m,1} & a_{m,2} & \cdots & a_{m,n} 
+\end{bmatrix}
+\begin{bmatrix} 
+    x_{1} \\
+    x_{2} \\
+    \vdots \\
+    x_{n} 
+\end{bmatrix}
+=
+\begin{bmatrix} 
+    v_{1} \\
+    v_{2} \\
+    \vdots \\
+    v_{m} 
+\end{bmatrix}
+```
+
+or:
+
+```math
+A\vec{x} = \vec{v}
+```
+
+The vector $\vec{v}$ can be expressed using an [invertible matrix](#invertible-and-identity-matrices):
+
+```math
+\vec{x} = A^{-1}\vec{v}
+```
+
+There are **many algorithms that solve linear equations** numerically. Arguably, the most popular one is the
+[Gaussian Elimination](https://en.wikipedia.org/wiki/Gaussian_elimination) algorithm.
+
+Graphically, **solving the system of linear equations is finding a vector** $\vec{x}$ which after applying the
+transformation lands on a vector $\vec{v}$.
+
+![Linear Transformations](linear_transformation_equations.gif)
+
+Another option is to draw equation graphs and **find their intersection point** (or **an intersection point of planes in
+3D**):
+
+![Linear Transformations](linear_transformation_equations_intersection.gif)
+
+The [determinant](#determinant) of the matrix above is **not zero**, which is why we have a single solution
+(intersection). In the **zero-determinant cases**, the transformation associated with the system of equations squishes
+space into a smaller dimension, so there's no inverse transformation. In this case the system has either **infinitely
+many solutions or no solutions**.
