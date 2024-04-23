@@ -1,5 +1,4 @@
 # Linear Algebra
-
 * [Introduction to Vectors](#introduction-to-vectors)
     * [Vector Magnitude and Direction](#vector-magnitude-and-direction)
     * [Vector Addition](#vector-addition)
