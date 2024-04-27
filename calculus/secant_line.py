@@ -59,14 +59,12 @@ class MyScene(Scene):
         m = (func(point_b_x) - func(point_a_x)) / (point_b_x - point_a_x)
         b = func(point_a_x) - m * point_a_x
 
-        math_text = MathTex(r"m = \frac{\Delta{y}}{\Delta{x}} \approx " + str(round(m, 2)))
+        math_text = MathTex(r"m = \frac{f(x_{b}) - f(x_{a})}{x_{b} - x_{a}} \approx " + str(round(m, 3)))
         math_text_line = MathTex(r"y = mx + b")
         math_text_line_shift = MathTex(r"b = y_{a} - mx_{a} = " + str(round(func(point_a_x), 2)) + "-" +
-                                       str(round(m, 2)) + "*" + str(round(point_a_x)) + r"\approx" + str(round(b, 2)))
+                                       str(round(m, 3)) + "*" + str(round(point_a_x)) + r"\approx" + str(round(b, 3)))
         (VGroup(math_text, math_text_line, math_text_line_shift)
          .arrange(DOWN).shift(np.array([-2, 2.7, 0])))
-
-        VGroup()
 
         point_a_label = (MathTex(r"[" + str(point_a_x) + "," + str(round(func(point_a_x), 2)) + "]")
                          .next_to(dot_a, direction=LEFT, buff=0.4))
@@ -77,7 +75,7 @@ class MyScene(Scene):
         def secant_line_func(x):
             return m * x + b
 
-        math_text_secant_line = MathTex("y = " + str(round(m, 2)) + "x + (" + str(round(b, 2)) + ")",
+        math_text_secant_line = MathTex("y = " + str(round(m, 3)) + "x + (" + str(round(b, 3)) + ")",
                                         color=YELLOW).rotate(35.5 * DEGREES).shift(np.array([0.4, 0.4, 0]))
         secant_line_calculated = plane.plot(secant_line_func, color=YELLOW, x_range=[-1, 10])
 
