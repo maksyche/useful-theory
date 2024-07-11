@@ -45,7 +45,8 @@ class MyScene(Scene):
         def func(x):
             return np.power(x - 3.7, 3) / 5 + np.power(x - 3.7, 2) / 5 - (x - 3.7) + 2
 
-        graph = plane.plot(func, color=WHITE, x_range=[0.2, 10])
+        # Start from 0.2 to have negative Y values on the graph
+        graph = plane.plot(func, color=WHITE, x_range=[0.333, 10])
 
         point_a_x = 4
         point_b_x = 6

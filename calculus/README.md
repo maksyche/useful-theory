@@ -22,6 +22,15 @@ coordinates of any intersection point** ($a$ or $b$).
 
 ![Secant Line](secant_line.gif)
 
+In the example above, we calculated the average rate of change on the interval $[a, b]$. Now **let's give these values 
+some real-world meaning**. Let's consider I went for a walk and this **graphic shows a distance from me to my home over 
+time**. $y$ denotes a distance in kilometers and $x$ denotes time in hours I spent walking *(ignore that the graphic 
+doesn't start at 0; let's assume I started the timer before actually going out)*. 
+
+So, the average rate of change of the distance I walked on the interval from the 4th hour of my trip until the 6th hour 
+is approximately $0.734$. What's the average rate of change of the distance? **It's speed**. This means that my average 
+speed at this interval was approximately $0.734 km/h$.
+
 ### The Instant Rate of Change (Derivative)
 
 The idea of the **instant rate of change** (which is also called a **derivative**) is similar to the
@@ -50,6 +59,10 @@ Graphically, the **instant rate of change** for $f(x)$ at the point $a$ is **the
 $a$. The smaller $h$ we take for the calculation - the better result we get:
 
 ![Tangent Line](tangent_line.gif)
+
+Let's again **give these values some real-world meaning**. If this graphic represents **a distance from me to my home 
+over time** when I went for a walk *(just like in the [average rate of change](#the-average-rate-of-change) example)*, 
+the **instant rate of change** actually represents my real speed in any given moment of time.
 
 ### Manual Derivative Calculation
 

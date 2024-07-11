@@ -51,7 +51,7 @@ class MyScene(Scene):
         def func_derivative(x):
             return np.power(x, 2) * 3 / 5 - 4.04 * x + 5.734
 
-        graph = plane.plot(func, color=WHITE, x_range=[0.2, 10])
+        graph = plane.plot(func, color=WHITE, x_range=[0.333, 10])
         # graph2 = plane.plot(func_simplified, color=YELLOW, x_range=[0.2, 10])
         # graph_derivative = plane.plot(func_derivative, color=YELLOW, x_range=[0, 10])
 
