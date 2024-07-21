@@ -19,8 +19,8 @@ class MyScene(Scene):
             # 3.2/1.8
             # 2.4/1.35
             # 1.6/0.9
-            x_range=(-0.2, 9.4),
-            y_range=(-0.2, 5.2),
+            x_range=(-0.5, 12.3),
+            y_range=(-0.5, 6.7),
             x_length=12.8,
             y_length=7.2,
 
@@ -34,107 +34,148 @@ class MyScene(Scene):
         )
 
         # Axes labels config
-        # plane.get_axis(0).set(color=BLUE)
-        # plane.get_axis(1).set(color=BLUE)
         axes_labels = plane.get_axis_labels()
 
         self.add(plane, axes_labels)
 
-        # The scene itself
+        # --------------------------------------------------------------------------------------------------------------
+        # Calculating
         def func(x):
-            return np.power(x - 3.7, 3) / 5 + np.power(x - 3.7, 2) / 5 - (x - 3.7) + 2
+            # y = 0.0003 * x ^ 5 - 0.012 * x ^ 4 + 0.164 * x ^ 3 - 0.931 * x ^ 2 + 2.045 * x
+            return (0.0003 * np.power(x, 5) - 0.012 * np.power(x, 4) + 0.164 * np.power(x, 3) - 0.931 * np.power(x, 2)
+                    + 2.045 * x)
 
-        # Simplified manually
-        # def func_simplified(x):
-        #     return np.power(x, 3) / 5 - 2.02 * np.power(x, 2) + 5.734 * x - 1.6926
+        # Solved equation f(x) = 0
+        func_x_intersection_1 = 11.7457
 
-        def func_derivative(x):
-            return np.power(x, 2) * 3 / 5 - 4.04 * x + 5.734
+        def func_der_1(x):
+            # y = 0.0015 * x ^ 4 - 0.048 * x ^ 3 + 0.492 * x ^ 2 - 1.862 * x + 2.045
+            return 0.0015 * np.power(x, 4) - 0.048 * np.power(x, 3) + 0.492 * np.power(x, 2) - 1.862 * x + 2.045
 
-        graph = plane.plot(func, color=WHITE, x_range=[0.333, 10])
-        # graph2 = plane.plot(func_simplified, color=YELLOW, x_range=[0.2, 10])
-        # graph_derivative = plane.plot(func_derivative, color=YELLOW, x_range=[0, 10])
+        point_a_x_tracker = ValueTracker(5)
+        point_b_x_tracker = ValueTracker(7)
+        ending_point = 6
+        end_h_value = 0.0001
+        print("Real derivative: " + str(func_der_1(ending_point)))
 
-        h = ValueTracker(1)
-        point_a_x = 5
-        point_a_coord = plane.coords_to_point(point_a_x, func(point_a_x))
-        dot_a = Dot(point_a_coord)
-        dot_b = Dot(plane.coords_to_point(point_a_x + h.get_value(), func(point_a_x + h.get_value())))
+        def point_a_x():
+            return point_a_x_tracker.get_value()
 
-        # Not used because of the updater
-        m = (func(point_a_x + h.get_value()) - func(point_a_x)) / h.get_value()
-        b = func(point_a_x) - m * point_a_x
-        print("M in point a: " + str((func(point_a_x + h.get_value()) - func(point_a_x)) / h.get_value()))
-        print("M in point a calculated manually: " + str(func_derivative(point_a_x)))
-        print("b: " + str(b))
+        def point_b_x():
+            return point_b_x_tracker.get_value()
 
-        math_text_h = MathTex(r"h = " + str(h.get_value())).shift(np.array([-2, 3.5, 0]))
-        math_text = (MathTex(r"m = \frac{f(x + h) - f(x)}{h} \approx "
-                             + str(round((func(point_a_x + h.get_value()) - func(point_a_x)) / h.get_value(), 5)))
-                     .shift(np.array([-2, 2.5, 0])))
-        math_text_line_shift = (MathTex(r"b = y - mx = " + str(round(func(point_a_x), 2)) + "-" +
-                                        str(round((func(point_a_x + h.get_value()) - func(point_a_x)) / h.get_value(),
-                                                  5)) + "*" + str(round(point_a_x)) + r"\approx" + str(
-            round(func(point_a_x) - (func(point_a_x + h.get_value()) - func(point_a_x)) / h.get_value() * point_a_x,
-                  5)))
-                                .shift(np.array([-2, 1.5, 0])))
+        def h():
+            return point_b_x() - point_a_x()
 
-        point_a_label = (MathTex(r"[" + str(point_a_x) + "," + str(round(func(point_a_x), 2)) + "]")
-                         .next_to(dot_a, direction=DR, buff=0.1))
+        def point_a_y():
+            return func(point_a_x())
 
-        # Draw a parallel line with a calculated slope
-        secant_line_calculated = plane.plot(
-            lambda x: (func(point_a_x + h.get_value()) - func(point_a_x)) / h.get_value() * x +
-                      func(point_a_x) - (func(point_a_x + h.get_value()) - func(point_a_x)) / h.get_value() * point_a_x,
-            color=YELLOW, x_range=[-1, 10])
+        def point_b_y():
+            return func(point_b_x())
 
-        # Updaters
-        math_text_h.add_updater(
-            lambda x: x.become(
-                MathTex(r"h = " + str(round(h.get_value(), 5))).shift(np.array([-2, 3.5, 0]))
-            )
+        def point_a_coord():
+            return plane.coords_to_point(point_a_x(), point_a_y())
+
+        def point_b_coord():
+            return plane.coords_to_point(point_b_x(), point_b_y())
+
+        def m():
+            return (point_b_y() - point_a_y()) / h()
+
+        def c():
+            return point_a_y() - m() * point_a_x()
+
+        def secant_line_func(x):
+            return m() * x + c()
+
+        # --------------------------------------------------------------------------------------------------------------
+        # Plotting
+        graph = plane.plot(func, color=WHITE, x_range=[0, func_x_intersection_1])
+        graph_func_label = MathTex(r"f(x)", color=WHITE).shift(np.array([-4.2, -1.2, 0.0]))
+
+        func_x_intersection_1_line = DashedLine(plane.coords_to_point(func_x_intersection_1, -10, 0),
+                                                plane.coords_to_point(func_x_intersection_1, 10, 0),
+                                                dash_length=0.1, stroke_opacity=0.5)
+
+        rounding_value = 4
+
+        def dot_a_func():
+            return Dot(point_a_coord())
+
+        dot_a = dot_a_func()
+        dot_a.add_updater(lambda x: x.become(dot_a_func()))
+
+        def dot_b_func():
+            return Dot(point_b_coord())
+
+        dot_b = dot_b_func()
+        dot_b.add_updater(lambda x: x.become(dot_b_func()))
+
+        def math_text_h_func():
+            return MathTex(r"h = b_{x} - a_{x} = " + str(round(h(), rounding_value))).shift(np.array([0, 3, 0]))
+
+        math_text_h = math_text_h_func()
+        math_text_h.add_updater(lambda x: x.become(math_text_h_func()))
+
+        def math_text_m_func():
+            return (MathTex(r"m = \frac{f(b_{x}) - f(a_{x})}{h} \approx " + str(round(m(), rounding_value)))
+                    .shift(np.array([0, 2.2, 0])))
+
+        math_text_m = math_text_m_func()
+        math_text_m.add_updater(lambda x: x.become(math_text_m_func()))
+
+        math_text_line = MathTex(r"y = mx + c").shift(np.array([0, 1.4, 0]))
+
+        def math_text_line_calculate_func():
+            return MathTex(
+                r"c = a_{y} - ma_{x} = "
+                + str(round(point_a_y(), rounding_value))
+                + "-" + str(round(m(), rounding_value))
+                + "*" + str(round(point_a_x(), rounding_value))
+                + r"\approx" + str(round(c(), rounding_value))
+            ).shift(np.array([0, 0.8, 0]))
+
+        math_text_line_calculate = math_text_line_calculate_func()
+        math_text_line_calculate.add_updater(lambda x: x.become(math_text_line_calculate_func()))
+
+        def math_text_secant_line_func():
+            return (MathTex(
+                "y = " + str(round(m(), rounding_value))
+                + "x + (" + str(round(c(), rounding_value)) + ")", color=YELLOW
+            ).shift(np.array([0, 0.2, 0])))
+
+        math_text_secant_line = math_text_secant_line_func()
+        math_text_secant_line.add_updater(lambda x: x.become(math_text_secant_line_func()))
+
+        def secant_line_calculated_func():
+            return plane.plot(secant_line_func, color=YELLOW, x_range=[-1, 13])
+
+        secant_line_calculated = secant_line_calculated_func()
+        secant_line_calculated.add_updater(lambda x: x.become(secant_line_calculated_func()))
+
+        # --------------------------------------------------------------------------------------------------------------
+        # Animation
+        self.add(func_x_intersection_1_line)
+        self.play(
+            Create(graph),
+            Write(graph_func_label),
+            Create(dot_a),
+            Create(dot_b),
         )
-
-        math_text.add_updater(
-            lambda x: x.become(
-                (MathTex(r"m = \frac{f(x + h) - f(x)}{h} \approx "
-                         + str(round((func(point_a_x + h.get_value()) - func(point_a_x)) / h.get_value(), 5)))
-                 .shift(np.array([-2, 2.5, 0])))
-            )
+        self.play(
+            Write(math_text_h),
+            Write(math_text_m),
+            Write(math_text_line),
+            Write(math_text_line_calculate),
         )
-
-        math_text_line_shift.add_updater(
-            lambda x: x.become(
-                (MathTex(r"b = y - mx = " + str(round(func(point_a_x), 2)) + "-" +
-                         str(round((
-                                           func(point_a_x + h.get_value()) - func(point_a_x)
-                                   ) / h.get_value(), 5)) + "*" + str(round(point_a_x)) +
-                         r"\approx" + str(round(
-                    func(point_a_x) - (func(point_a_x + h.get_value()) - func(point_a_x)) / h.get_value() * point_a_x,
-                    5)))
-                 .shift(np.array([-2, 1.5, 0])))
-            )
+        self.play(
+            Write(math_text_secant_line)
         )
-
-        dot_b.add_updater(
-            lambda x: x.become(
-                Dot(plane.coords_to_point(point_a_x + h.get_value(), func(point_a_x + h.get_value())))
-            )
+        self.play(
+            Create(secant_line_calculated)
         )
-
-        secant_line_calculated.add_updater(
-            lambda a: a.become(
-                plane.plot(
-                    lambda x: (func(point_a_x + h.get_value()) - func(point_a_x)) / h.get_value() * x +
-                              func(point_a_x) - (func(point_a_x + h.get_value()) - func(point_a_x)) / h.get_value() * point_a_x,
-                    color=YELLOW, x_range=[-1, 10])
-            )
-        )
-
-        self.add(
-            math_text_h, math_text, math_text_line_shift,
-            graph, dot_a, dot_b, point_a_label,
-            secant_line_calculated
-        )
-        self.play(h.animate.set_value(0.00005), run_time=10, rate_func=exponential_decay)
-        self.wait(1)
+        self.play(
+            point_a_x_tracker.animate.set_value(ending_point),
+            point_b_x_tracker.animate.set_value(ending_point + end_h_value),
+            run_time=10, rate_func=lingering)
+        self.wait(5)

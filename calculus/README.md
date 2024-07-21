@@ -23,13 +23,12 @@ coordinates of any intersection point** ($a$ or $b$).
 ![Secant Line](secant_line.gif)
 
 In the example above, we calculated the average rate of change on the interval $[a, b]$. Now **let's give these values 
-some real-world meaning**. Let's consider I went for a walk and this **graphic shows a distance from me to my home over 
-time**. $y$ denotes a distance in kilometers and $x$ denotes time in hours I spent walking *(ignore that the graphic 
-doesn't start at 0; let's assume I started the timer before actually going out)*. 
+some real-world meaning**. Let's consider I went for a walk and **this graphic shows a distance from me to my home over 
+time**. $y$ denotes a distance in kilometers and $x$ denotes time in hours I spent walking.
 
-So, the average rate of change of the distance I walked on the interval from the 4th hour of my trip until the 6th hour 
-is approximately $0.734$. What's the average rate of change of the distance? **It's speed**. This means that my average 
-speed at this interval was approximately $0.734 km/h$.
+So, the average rate of change of the distance I walked on the interval from the 5th hour of my trip until the 7th hour 
+is approximately $0.145. What's the average rate of change of the distance? **It's speed** (or velocity in this case,
+to be precise). This means that my average velocity at this interval was approximately $145 m/h$.
 
 ### The Instant Rate of Change (Derivative)
 
@@ -55,14 +54,19 @@ same result:
 \lim_{h \to 0}\frac{f(x + h) - f(x)}{h} = \lim_{h \to 0}\frac{f(x) - f(x - h)}{h}
 ```
 
+Conceptually, the **idea of an instant rate of change doesn't make any sense**, cause no change happens instantly. But 
+if we look at a graph of a function, we can clearly tell what the function is doing *(like increasing or decreasing)* at 
+any given point where it's defined.
+
 Graphically, the **instant rate of change** for $f(x)$ at the point $a$ is **the slope of a tangent line** at a point
-$a$. The smaller $h$ we take for the calculation - the better result we get:
+$a$. The smaller $h$ we take for the calculation - the better result we get. We can illustrate that as we're moving 
+points closer to each other, so they almost meet at a certain point $a$ in between:
 
 ![Tangent Line](tangent_line.gif)
 
 Let's again **give these values some real-world meaning**. If this graphic represents **a distance from me to my home 
 over time** when I went for a walk *(just like in the [average rate of change](#the-average-rate-of-change) example)*, 
-the **instant rate of change** actually represents my real speed in any given moment of time.
+the **instant rate of change** actually represents my real velocity at any given moment of time.
 
 ### Manual Derivative Calculation
 
@@ -90,26 +94,26 @@ Now, if we plug in $h=0$:
 This is exactly the derivative that we get for $f(x) = x^3$ with the
 [rules of computation](https://en.wikipedia.org/wiki/Derivative#Rules_of_computation).
 
-Let's calculate the exact derivative for the example of the previous section. The function I used in that example (I
-know it's not pretty) is:
+Let's manually calculate the exact derivative for the example function of the previous section using the power rule of 
+computation I've just calculated. The function I used in that example is *(I know it's not pretty)*:
 
 ```math
-f(x) = 0.2x^3 - 2.02x^2 + 5.734x - 1.6926
+f(x) = 0.0003x^5 - 0.012x^4 + 0.164x^3 - 0.931x^2 + 2.045x
 ```
 
 The derivative of this function is:
 
 ```math
-\frac{df}{dx} = 0.6x^2 - 4.04x + 5.734
+\frac{df}{dx} = 0.0015x^4 - 0.048x^3 + 0.492x^2 - 1.862x + 2.045
 ```
 
-Now, if we put $x=5$ in the exact derivative we get:
+Now, if we plug $x=6$ in the exact derivative function we get:
 
 ```math
-0.6 * 5^2 - 4.04 * 5 + 5.734 = 15 - 20.2 + 5.734 = 0.534
+0.0015 * 6 ^ 4 - 0.048 * 6 ^ 3 + 0.492 * 6 ^ 2 - 1.862 * 6 + 2.045 = 1.944 - 10.368 + 17.712 - 11.172 + 2.045 = 0.161
 ```
 
-Using $h = 0.0001$, the value of the derivative in the point $x=5$ calculated by the computer is 
-**$0.5340980019985508$**, which is pretty close.
-
-
+Using $h = 0.0001$, the value of the derivative at the point $x=6$ calculated by the computer in the previous section is 
+**$0.161$**, which is exactly what we got manually. Usually, we're not that lucky, and derivatives calculated by a 
+computer have some deviations, but it's totally fine for many use cases. Also, the smaller $h$ we take, the better 
+result we get.

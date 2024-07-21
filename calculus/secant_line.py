@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-import numpy as np
 from manim import *  # 0.18.0
 
 config.background_color = ManimColor("#0e1116")
@@ -20,8 +19,8 @@ class MyScene(Scene):
             # 3.2/1.8
             # 2.4/1.35
             # 1.6/0.9
-            x_range=(-0.2, 9.4),
-            y_range=(-0.2, 5.2),
+            x_range=(-0.5, 12.3),
+            y_range=(-0.5, 6.7),
             x_length=12.8,
             y_length=7.2,
 
@@ -35,53 +34,76 @@ class MyScene(Scene):
         )
 
         # Axes labels config
-        # plane.get_axis(0).set(color=BLUE)
-        # plane.get_axis(1).set(color=BLUE)
         axes_labels = plane.get_axis_labels()
 
         self.add(plane, axes_labels)
 
-        # The scene itself
+        # --------------------------------------------------------------------------------------------------------------
+        # Calculating
         def func(x):
-            return np.power(x - 3.7, 3) / 5 + np.power(x - 3.7, 2) / 5 - (x - 3.7) + 2
+            # y = 0.0003 * x ^ 5 - 0.012 * x ^ 4 + 0.164 * x ^ 3 - 0.931 * x ^ 2 + 2.045 * x
+            return (0.0003 * np.power(x, 5) - 0.012 * np.power(x, 4) + 0.164 * np.power(x, 3) - 0.931 * np.power(x, 2)
+                    + 2.045 * x)
 
-        # Start from 0.2 to have negative Y values on the graph
-        graph = plane.plot(func, color=WHITE, x_range=[0.333, 10])
+        # Solved equation f(x) = 0
+        func_x_intersection_1 = 11.7457
 
-        point_a_x = 4
-        point_b_x = 6
-        point_a_coord = plane.coords_to_point(point_a_x, func(point_a_x))
-        point_b_coord = plane.coords_to_point(point_b_x, func(point_b_x))
+        point_a_x = 5
+        point_b_x = 7
+        point_a_y = round(func(point_a_x), 2)
+        point_b_y = round(func(point_b_x), 2)
+        point_a_coord = plane.coords_to_point(point_a_x, point_a_y)
+        point_b_coord = plane.coords_to_point(point_b_x, point_b_y)
+
+        m = round((point_b_y - point_a_y) / (point_b_x - point_a_x), 3)
+        c = round(point_a_y - m * point_a_x, 3)
+
+        def secant_line_func(x):
+            return m * x + c
+
+        # --------------------------------------------------------------------------------------------------------------
+        # Plotting
+        graph = plane.plot(func, color=WHITE, x_range=[0, func_x_intersection_1])
+        graph_func_label = MathTex(r"f(x)", color=WHITE).shift(np.array([-4.2, -1.2, 0.0]))
+
+        func_x_intersection_1_line = DashedLine(plane.coords_to_point(func_x_intersection_1, -10, 0),
+                                                plane.coords_to_point(func_x_intersection_1, 10, 0),
+                                                dash_length=0.1, stroke_opacity=0.5)
+
         dot_a = Dot(point_a_coord)
         dot_b = Dot(point_b_coord)
-        secant_line = Line(point_a_coord, point_b_coord)
-        secant_line.set_length(5)
 
-        m = (func(point_b_x) - func(point_a_x)) / (point_b_x - point_a_x)
-        b = func(point_a_x) - m * point_a_x
+        math_text_a_b = MathTex(
+            r"a_{x} = " + str(point_a_x) + ",\quad b_{x} = " + str(point_b_x)
+        ).shift(np.array([0, 3, 0]))
+        math_text_m = MathTex(
+            r"m = \frac{f(b_{x}) - f(a_{x})}{b_{x} - a_{x}} \approx " + str(m)
+        ).shift(np.array([0, 2.2, 0]))
+        math_text_line = MathTex(r"y = mx + c").shift(np.array([0, 1.4, 0]))
+        math_text_line_calculate = MathTex(
+            r"c = a_{y} - ma_{x} = " + str(point_a_y) + "-"
+            + str(m) + "*" + str(point_a_x) + r"\approx" + str(c)
+        ).shift(np.array([0, 0.8, 0]))
+        math_text_secant_line = MathTex(
+            "y = " + str(m) + "x + " + str(c), color=YELLOW
+        ).shift(np.array([0, 0.2, 0]))
 
-        math_text = MathTex(r"m = \frac{f(x_{b}) - f(x_{a})}{x_{b} - x_{a}} \approx " + str(round(m, 3)))
-        math_text_line = MathTex(r"y = mx + b")
-        math_text_line_shift = MathTex(r"b = y_{a} - mx_{a} = " + str(round(func(point_a_x), 2)) + "-" +
-                                       str(round(m, 3)) + "*" + str(round(point_a_x)) + r"\approx" + str(round(b, 3)))
-        (VGroup(math_text, math_text_line, math_text_line_shift)
-         .arrange(DOWN).shift(np.array([-2, 2.7, 0])))
+        point_a_label = (MathTex(r"[" + str(point_a_x) + "," + str(point_a_y) + "]")
+                         .next_to(dot_a, direction=DOWN, buff=0.2))
+        point_b_label = (MathTex(r"[" + str(point_b_x) + "," + str(point_b_y) + "]")
+                         .next_to(dot_b, direction=DOWN, buff=0.2))
 
-        point_a_label = (MathTex(r"[" + str(point_a_x) + "," + str(round(func(point_a_x), 2)) + "]")
-                         .next_to(dot_a, direction=LEFT, buff=0.4))
-        point_b_label = (MathTex(r"[" + str(point_b_x) + "," + str(round(func(point_b_x), 2)) + "]")
-                         .next_to(dot_b, buff=0.4))
+        secant_line_calculated = plane.plot(secant_line_func, color=YELLOW, x_range=[-1, 13])
 
-        # Draw a parallel line with a calculated slope
-        def secant_line_func(x):
-            return m * x + b
+        # --------------------------------------------------------------------------------------------------------------
+        # Animation
+        self.add(func_x_intersection_1_line)
+        self.play(
+            Create(graph),
+            Write(graph_func_label))
+        self.wait()
 
-        math_text_secant_line = MathTex("y = " + str(round(m, 3)) + "x + (" + str(round(b, 3)) + ")",
-                                        color=YELLOW).rotate(35.5 * DEGREES).shift(np.array([0.4, 0.4, 0]))
-        secant_line_calculated = plane.plot(secant_line_func, color=YELLOW, x_range=[-1, 10])
-
-        self.add(math_text, math_text_line, math_text_line_shift)
-        self.add(graph)
+        self.play(Write(math_text_a_b))
         self.play(
             Create(dot_a),
             Create(dot_b),
@@ -90,14 +112,20 @@ class MyScene(Scene):
             Write(point_a_label),
             Write(point_b_label),
         )
+
+        self.play(Write(math_text_m))
+        self.play(Write(math_text_line))
+        self.play(Write(math_text_line_calculate))
+        self.wait()
+
         # self.play(
         #     Create(secant_line)
         # )
         # self.wait()
         self.play(
-            Create(secant_line_calculated)
+            Write(math_text_secant_line)
         )
         self.play(
-            Write(math_text_secant_line)
+            Create(secant_line_calculated)
         )
         self.wait(3)
