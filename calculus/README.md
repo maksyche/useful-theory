@@ -5,6 +5,7 @@
     * [Manual Derivative Calculation](#manual-derivative-calculation)
     * [Higher Order Derivatives](#higher-order-derivatives)
     * [Maximums and Minimums of a Function](#maximums-and-minimums-of-a-function)
+    * [Partial Derivatives](#partial-derivatives)
 
 ## Derivative
 
@@ -146,3 +147,33 @@ axis, the function itself has either the biggest or the smallest local value at 
 It totally makes sense if you go back to the slope definition of the derivative. When the sign of a slope changes, the
 function changes the direction of movement and the point where this change happens usually represents either a local 
 maximum or a local minimum value. The same works for higher derivatives.
+
+
+### Partial Derivatives
+
+For multivariable functions, for example $f(x,y)$, it's often useful to analyze how each variable affects the function 
+separately. **Partial derivatives** allow us to do that.
+
+**To calculate a partial derivative, we calculate a derivative with respect to one of the variables, with the other ones 
+held constant.**
+
+Let's calculate a partial derivative of this function with respect to the variable $x$:
+```math
+f(x,y) = cos(x) sin(y)
+\frac{\partial}{\partial x}f(x,y) = -sin(x) sin(y)
+```
+
+If we choose any point of this function, the value of the partial derivative with respect to $x$ shows us how much an
+increase of $x$ variable increases the function itself at this point. **If we take both partial derivatives and compare 
+them, we can say which variable affects the function more at any given point.**
+
+Graphically, we can represent a partial derivative of a multivariable function in 3D exactly the same way as we do with
+a single variable function in 2D. The value of a partial derivative of $f(x,y)$ with respect to $x$ at a point $a$ is 
+**the slope of a line tangent to the intersection graph (slice) of the $f(x,y)$ and the plane, parallel to $x$ and $z$ 
+axes passing through this point**. Since we calculate everything with respect to $x$, $y$ becomes a constant in all
+calculations.
+
+![Partial Derivatives](partial_derivatives.gif)
+
+**Partial derivatives are not limited to the 2-variable functions, but it's hard to visualize any space with more than 3 
+dimensions.**
