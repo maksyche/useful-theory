@@ -1,4 +1,5 @@
 # Calculus
+
 * [Derivative](#derivative)
     * [The Average Rate of Change](#the-average-rate-of-change)
     * [The Instant Rate of Change (Derivative)](#the-instant-rate-of-change-derivative)
@@ -6,6 +7,7 @@
     * [Higher Order Derivatives](#higher-order-derivatives)
     * [Maximums and Minimums of a Function](#maximums-and-minimums-of-a-function)
     * [Partial Derivatives](#partial-derivatives)
+    * [Gradient of a Function](#gradient-of-a-function)
 
 ## Derivative
 
@@ -145,35 +147,79 @@ axis, the function itself has either the biggest or the smallest local value at 
 ![Maximums and Minimums of a Function](minimums_maximums.gif)
 
 It totally makes sense if you go back to the slope definition of the derivative. When the sign of a slope changes, the
-function changes the direction of movement and the point where this change happens usually represents either a local 
+function changes the direction of movement and the point where this change happens usually represents either a local
 maximum or a local minimum value. The same works for higher derivatives.
-
 
 ### Partial Derivatives
 
-For multivariable functions, for example $f(x,y)$, it's often useful to analyze how each variable affects the function 
+For multivariable functions, for example $f(x,y)$, it's often useful to analyze how each variable affects the function
 separately. **Partial derivatives** allow us to do that.
 
-**To calculate a partial derivative, we calculate a derivative with respect to one of the variables, with the other ones 
+**To calculate a partial derivative, we calculate a derivative with respect to one of the variables, with the other ones
 held constant.**
 
 Let's calculate a partial derivative of this function with respect to the variable $x$:
+
 ```math
 f(x,y) = cos(x) sin(y)
+
 \frac{\partial}{\partial x}f(x,y) = -sin(x) sin(y)
 ```
 
 If we choose any point of this function, the value of the partial derivative with respect to $x$ shows us how much an
-increase of $x$ variable increases the function itself at this point. **If we take both partial derivatives and compare 
+increase of $x$ variable increases the function itself at this point. **If we take both partial derivatives and compare
 them, we can say which variable affects the function more at any given point.**
 
 Graphically, we can represent a partial derivative of a multivariable function in 3D exactly the same way as we do with
-a single variable function in 2D. The value of a partial derivative of $f(x,y)$ with respect to $x$ at a point $a$ is 
-**the slope of a line tangent to the intersection graph (slice) of the $f(x,y)$ and the plane, parallel to $x$ and $z$ 
+a single variable function in 2D. The value of a partial derivative of $f(x,y)$ with respect to $x$ at a point $a$ is
+**the slope of a line tangent to the intersection graph (slice) of the $f(x,y)$ and the plane, parallel to $x$ and $z$
 axes passing through this point**. Since we calculate everything with respect to $x$, $y$ becomes a constant in all
 calculations.
 
 ![Partial Derivatives](partial_derivatives.gif)
 
-**Partial derivatives are not limited to the 2-variable functions, but it's hard to visualize any space with more than 3 
+**Partial derivatives are not limited to the 2-variable functions, but it's hard to visualize any space with more than 3
 dimensions.**
+
+### Gradient of a Function
+
+Using [partial derivatives](#partial-derivatives), we can calculate how an increase of each variable of a multivariable
+function increases the function at any given point. **If we put the values of partial derivatives at any given point in
+a [vector](../linear-algebra/README.md#introduction-to-vectors), it will point to the direction of the fastest increase
+of the function at this point. This vector is called the gradient vector.**
+
+The Gradient is denoted by the nabla symbol $\nabla$ (which is pronounced as "del"):
+
+```math
+\nabla f(x,y) = 
+\begin{bmatrix}
+\frac{\partial}{\partial x}f(x,y)\\
+\frac{\partial}{\partial y}f(x,y)
+\end{bmatrix}
+```
+
+Graphically it looks like this **(note that the gradient vector is actually a 2D vector in $x, y$ plane)**:
+
+![Gradient](gradient.gif)
+
+Again, mathematically we can work with as many dimensions as we need, so the generic notation looks like this:
+
+```math
+\nabla f(x_{1}, x_{2}, \ldots, x_{n}) = 
+\begin{bmatrix}
+\frac{\partial}{\partial x_1}f(x_{1}, x_{2}, \ldots, x_{n}) \\
+\frac{\partial}{\partial x_2}f(x_{1}, x_{2}, \ldots, x_{n}) \\
+\vdots \\
+\frac{\partial}{\partial x_n}f(x_{1}, x_{2}, \ldots, x_{n}) 
+\end{bmatrix}
+```
+
+It might be a little confusing **why putting these values in a vector gives us the direction of the fastest increase of
+the function**, but it's actually pretty simple. It's logical that we should nudge the variable that gives the function
+a bigger increase more than the other variables. But how more? This is exactly what partial derivatives tell us.
+**Increasing variables proportionally to their derivatives gives us the best increase of the function overall.** And
+this is exactly what gradient vector does.
+
+Pay attention that since it's the calculus world **the "increase" is actually very small** (ideally approaches 0). To
+get the shortest path to the local maximum of a function, we need to recalculate the gradient after every increase.
+**The smaller steps we take the shorter path we get.**

@@ -51,17 +51,25 @@ class MyScene(ThreeDScene):
                  .shift(np.array([0, axes.point_to_coords(dot_coords)[1], 0])))
         intersection = axes.plot_surface(func, checkerboard_colors=None, stroke_width=2, stroke_color=RED,
                                          u_range=[-3.2, 3.2], v_range=[dot_coords[1], dot_coords[1]])
-        tangent_line = axes.plot_surface(tangent_line_func, checkerboard_colors=None, stroke_width=2,
-                                         stroke_color=YELLOW, u_range=[dot_coords[0] - 1, dot_coords[0] + 1],
-                                         v_range=[dot_coords[1], dot_coords[1]])
-        dot = Dot3D(axes.point_to_coords(dot_coords), radius=0.05)
-        function_text = (MathTex(r"f(x,y) = cos(x) sin(y)")
-                         .shift(np.array([-4, 3.5, 0])))
+
+        total_shift = np.array([2.7, 0, 0])
+
+        tangent_line = (axes.plot_surface(tangent_line_func, checkerboard_colors=None, stroke_width=2,
+                                          stroke_color=YELLOW, u_range=[dot_coords[0] - 1, dot_coords[0] + 1],
+                                          v_range=[dot_coords[1], dot_coords[1]])
+                        .shift(total_shift))
+
+        dot = Dot3D(axes.point_to_coords(dot_coords), radius=0.05).shift(total_shift)
 
         dot_text = (
             MathTex(r"a [" + str(dot_coords[0]) + "," + str(dot_coords[1]) + "," + str(round(dot_coords[2], 3)) + "]")
             .rotate(angle=90 * DEGREES, axis=np.array([1, 0, 0]))
             .next_to(dot, direction=RIGHT + IN, buff=0.1))
+
+        all_graphics_group = VGroup(axes, labels, surface, plane, intersection)
+
+        function_text = (MathTex(r"f(x,y) = cos(x) sin(y)", color=ManimColor('#29ABCA'))
+                         .shift(np.array([-4, 3, 0])))
 
         derivative_text = (MathTex(r"\frac{\partial}{\partial x}f(x,y) = -sin(x) sin(y)")
                            .rotate(angle=90 * DEGREES, axis=np.array([1, 0, 0])))
@@ -69,10 +77,6 @@ class MyScene(ThreeDScene):
         m_text = (MathTex(r"m = \frac{\partial}{\partial x}f(" + str(dot_coords[0])
                           + "," + str(dot_coords[1]) + r") \approx " + str(round(m, 3)))
                   .rotate(angle=90 * DEGREES, axis=np.array([1, 0, 0])))
-
-        (VGroup(derivative_text, m_text)
-         .arrange(IN)
-         .shift(np.array([-4, 0, 2])))
 
         c_formula_text = (MathTex(r"c = z_{a} - m * x_{a}")
                           .rotate(angle=90 * DEGREES, axis=np.array([1, 0, 0])))
@@ -88,9 +92,9 @@ class MyScene(ThreeDScene):
                                      color=YELLOW)
                              .rotate(angle=90 * DEGREES, axis=np.array([1, 0, 0])))
 
-        (VGroup(c_formula_text, c_calculation_text, z_formula_text, z_calculated_text)
+        (VGroup(derivative_text, m_text, c_formula_text, c_calculation_text, z_formula_text, z_calculated_text)
          .arrange(IN)
-         .shift(np.array([-4, 0, -1.5])))
+         .shift(np.array([-4, 0, 0.5])))
 
         # --------------------------------------------------------------------------------------------------------------
         # Animation
@@ -113,11 +117,12 @@ class MyScene(ThreeDScene):
 
         self.play(
             phi.animate.set_value(90 * DEGREES),
-            theta.animate.set_value(270 * DEGREES)
+            theta.animate.set_value(270 * DEGREES),
+            Uncreate(surface),
+            Unwrite(plane)
         )
         self.play(
-            Uncreate(surface),
-            Uncreate(plane)
+            all_graphics_group.animate.shift(total_shift)
         )
         self.play(
             Create(dot),
