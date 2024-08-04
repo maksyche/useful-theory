@@ -1,16 +1,20 @@
 # Calculus
 
-* [Derivative](#derivative)
+* [Derivatives](#derivatives)
     * [The Average Rate of Change](#the-average-rate-of-change)
-    * [The Instant Rate of Change (Derivative)](#the-instant-rate-of-change-derivative)
+    * [The Instant Rate of Change (The Derivative)](#the-instant-rate-of-change-the-derivative)
     * [Manual Derivative Calculation](#manual-derivative-calculation)
     * [Higher Order Derivatives](#higher-order-derivatives)
     * [Maximums and Minimums of a Function](#maximums-and-minimums-of-a-function)
     * [Partial Derivatives](#partial-derivatives)
-    * [Gradient of a Function](#gradient-of-a-function)
-    * [Function Approximation](#function-approximation)
+    * [The Gradient of a Function](#the-gradient-of-a-function)
+* [Integrals](#integrals)
+    * [Antiderivatives](#antiderivatives)
+    * [The Fundamental Theorem of Calculus](#the-fundamental-theorem-of-calculus)
+* [Function Approximation](#function-approximation)
+    * [Taylor Series](#taylor-series)
 
-## Derivative
+## Derivatives
 
 ### The Average Rate of Change
 
@@ -36,7 +40,7 @@ So, the average rate of change of the distance I walked on the interval from the
 is approximately $0.145. What's the average rate of change of the distance? **It's speed** (or velocity in this case,
 to be precise). This means that my average velocity at this interval was approximately $145 m/h$.
 
-### The Instant Rate of Change (Derivative)
+### The Instant Rate of Change (The Derivative)
 
 The idea of the **instant rate of change** (which is also called a **derivative**) is similar to the
 [average rate of change](#the-average-rate-of-change), but the **run is approaching zero**.
@@ -182,12 +186,12 @@ calculations.
 **Partial derivatives are not limited to the 2-variable functions, but it's hard to visualize any space with more than 3
 dimensions.**
 
-### Gradient of a Function
+### The Gradient of a Function
 
 Using [partial derivatives](#partial-derivatives), we can calculate how an increase of each variable of a multivariable
-function increases the function at any given point. **If we put the values of partial derivatives at any given point in
-a [vector](../linear-algebra/README.md#introduction-to-vectors), it will point to the direction of the fastest increase
-of the function at this point. This vector is called the gradient vector.**
+function increases the function at any given point. If we put the values of partial derivatives at any given point in a
+[vector](../linear-algebra/README.md#introduction-to-vectors), it will point to the direction of the fastest increase of
+the function at this point. This vector is called the **gradient vector**.
 
 The Gradient is denoted by the nabla symbol $\nabla$ (which is pronounced as "del"):
 
@@ -222,8 +226,60 @@ a bigger increase more than the other variables. But how more? This is exactly w
 this is exactly what gradient vector does.
 
 Pay attention that since it's the calculus world **the "increase" is actually very small** (ideally approaches 0). To
-get the shortest path to the local maximum of a function, we need to recalculate the gradient after every increase.
-**The smaller steps we take the shorter path we get.**
+get the shortest path to the local maximum of a function, we need to recalculate the gradient vector after every
+increase. **The smaller steps we take the shorter path we get.**
+
+## Integrals
+
+### Antiderivatives
+
+We already know the [derivative of a distance function gives us velocity](#the-instant-rate-of-change-the-derivative).
+But we can also go backwards and find the distance function from the velocity one. **The process of finding an
+antiderivative function is called integration**.
+
+The **integral notation** is written like this:
+
+```math
+f(x) = \int f'(x)dx
+```
+
+We know that the derivative of a constant equals $0$, so we lose information about constants during differentiation. It
+means that **during integration we find not a single function, but a class of functions**, because there may be
+unlimited number of additional constants in the original function.
+
+Let's find an antiderivative of a simple function using the [power rule](https://en.wikipedia.org/wiki/Power_rule):
+
+```math
+f(x) = \int 3x^2 dx = x^3 + C
+```
+
+Notice, that $C$ is an integration constant that was lost during differentiation, and it can be any number.
+
+### The Fundamental Theorem of Calculus
+
+Let's again assume that the function represents velocity. If the velocity is constant on the interval its graphic looks
+like a line. We know from physics that **distance is velocity multiplied by time**. If we **draw a rectangle under this
+graph, we see that one side represents velocity and another represents time**. This means that we **calculate the
+distance traveled exactly the same way we calculate the area of this rectangle**. If the velocity is not constant, we
+can still represent it with rectangles. We just need more of them. Then, we calculate the area of each rectangle and sum
+the results. The end result will still show us the distance traveled, just with a rounding error. The more rectangles we
+use, the better the result we get.
+
+Another logical way to **calculate the distance traveled is to subtract the start point from the destination**. The
+distance function is an antiderivative of the velocity function, so if we know the antiderivative, we know the values of
+both points and can easily calculate the distance. **The Fundamental Theorem of Calculus links the concept of
+calculating the area under the function to the function's antiderivative.**
+
+The **definite integral** can be used to calculate the area under the graph on some interval $[a,b]$. If $F'(x) = f(x)$,
+then:
+
+```math
+\int_{a}^{b} f(x)dx = F(b) - F(a)
+```
+
+Notice that we don't care about what antiderivative we choose, because **the constants cancel each other out**.
+
+![The Fundamental Theory of Calculus](fundamental_theory_of_calculus.gif)
 
 ## Function Approximation
 
