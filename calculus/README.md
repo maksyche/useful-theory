@@ -8,6 +8,7 @@
     * [Maximums and Minimums of a Function](#maximums-and-minimums-of-a-function)
     * [Partial Derivatives](#partial-derivatives)
     * [Gradient of a Function](#gradient-of-a-function)
+    * [Function Approximation](#function-approximation)
 
 ## Derivative
 
@@ -223,3 +224,72 @@ this is exactly what gradient vector does.
 Pay attention that since it's the calculus world **the "increase" is actually very small** (ideally approaches 0). To
 get the shortest path to the local maximum of a function, we need to recalculate the gradient after every increase.
 **The smaller steps we take the shorter path we get.**
+
+## Function Approximation
+
+**Function Approximation is a technique for selecting a function that closely matches a target function** (known or
+unknown and underlying).
+
+There are 2 major classes of function approximation problems:
+
+- **Approximating a known function**. It's useful when the original function is too complicated for calculations, and
+  we select an approximate function which behaves very similarly for the particular problem, but works better for
+  calculations.
+- **Approximating an unknown underlying function by its data points**. In many cases, to solve problems we work with
+  functions instead of data points, so we first need to find one.
+
+### Taylor Series
+
+For most common functions, the infinite sum of terms that are expressed in terms of the function's derivatives at a
+single point equals the function near this point. To say it simpler, **if we choose a polynomial where all its
+derivatives equal the derivatives of a function at a given point, this polynomial will behave very closely to the
+function itself**. This polynomial is called **Taylor Series**.
+
+Mathematically it looks like this:
+
+```math
+f(x) \approx f(a)+f'(a)(x-a)+\frac{f''(a)}{2!}(x-a)^2+\frac{f'''(a)}{3!}(x-a)^3+\cdots
+```
+
+or:
+
+```math
+f(x) \approx \sum_{i=0}^{n} \frac{f^{(i)}(a)}{i!}(x-a)^i
+```
+
+It looks complicated, but if we need to approximate a function around $0$, this expression can be simplified (it's
+also called Maclaurin series):
+
+```math
+f(x) \approx f(0)+f'(0)x+\frac{f''(0)}{2!}x^2+\frac{f'''(0)}{3!}x^3+\cdots
+```
+
+Let's approximate $f(x) = cos(x)$ around $0$. $cos(0) = 1$ so the first term of our polynomial is $1$:
+
+```math
+f(x) = 1
+```
+
+The derivative of $cos(x)$ is $-sin(x)$ which equals $0$ at $x=0$. The derivative of $f(x) = 1$ is already $0$, so
+there's no need to add a second term to it. The second derivative of $cos(x)$ is $-cos(x)$, which equals $-1$ at $x=0$.
+Using the [power rule](https://en.wikipedia.org/wiki/Power_rule) we see that the second derivative of $x^2$ is
+$1 \cdot 2 \cdot x^0 = 2$. To make it equal $-1$ we need to multiply it by $-\frac{1}{2}$. So our polynomial should look
+like this now:
+
+```math
+f(x) = 1 - \frac{1}{2}x^2
+```
+
+This is already a pretty good approximation for many use cases, but we can do even better. The third derivative of
+$cos(x)$ is $sin(x)$ which again equals $0$ at $x=0$. Since the third derivative of our current polynomial is already
+$0$ we, again, skip the term. The fourth derivative of $cos(x)$ is $cos(x)$ and equals $1$ at $x=0$. The fourth
+derivative of $x^4$ is $1 \cdot 2 \cdot 3 \cdot 4 \cdot x^0=24$. To make it equal $1$ we need to multiply it by
+$\frac{1}{24}$. So our polynomial should look like this now:
+
+```math
+f(x) = 1 - \frac{1}{2}x^2 + \frac{1}{24}x^4
+```
+
+This is a very good approximation and we can stop here. Here's how it looks graphically:
+
+![Taylor Series](taylor_series.gif)
