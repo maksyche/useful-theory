@@ -167,7 +167,8 @@ Let's calculate a partial derivative of this function with respect to the variab
 
 ```math
 f(x,y) = cos(x) sin(y)
-
+```
+```math
 \frac{\partial}{\partial x}f(x,y) = -sin(x) sin(y)
 ```
 
