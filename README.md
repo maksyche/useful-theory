@@ -5,7 +5,7 @@ may require.
 ## Contents
 - [Calculus](calculus/README.md)
 - [Linear Algebra](linear-algebra/README.md)
-- [Neural Networks](neural-networks/README.md)
+- [Machine Learning](machine-learning/README.md)
 - [Digital Signal Processing](dsp/README.md)
 - [Electronics](/electronics/README.md)
 
