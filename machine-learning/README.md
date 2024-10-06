@@ -49,15 +49,15 @@ input layer. A superscript $(H)$ is used for the hidden layer, so $n^{(H)}$ is t
 layer, and $w_{j,i}^{(H)}$ denotes the weight for the connection between the input and the hidden layer neurons. The
 indices $j,i$ might feel backward, but it lines up with how you execute matrix multiplications (you might understand it
 better if you look at the code of a [practical example](https://github.com/maksyche/spam-detector)). The same idea is
-applied to the output layer $(O)$, but it has a lesser indices, cause it comprises a single output neuron. Now, let's
+applied to the output layer $(O)$, but it has lesser indices, cause it comprises a single output neuron. Now, let's
 write down all the formulas to calculate neuron values at each level:
 
 ```math
-a_{j}^{(H)} = \sigma(\sum_{i=1}^{n^{(I)}}w_{j,i}^{(H)}x_{i} + b_{j}^{(H)})
+a_{j}^{(H)} = \sigma(\sum_{i=1}^{n^{(I)}} w_{j,i}^{(H)}x_{i} + b_{j}^{(H)})
 ```
 
 ```math
-a^{(O)} = \sigma(\sum_{j=1}^{n^{(H)}}w_{j}^{(O)}a_{j}^{(O)} + b^{(O)})
+a^{(O)} = \sigma(\sum_{j=1}^{n^{(H)}} w_{j}^{(O)}a_{j}^{(H)} + b^{(O)})
 ```
 
 **Why do we need an activation function?** Activation functions are necessary to **prevent linearity**.
@@ -75,3 +75,169 @@ represents its brightness, so it should be normalized to $[0, 1]$ before enterin
 
 The process of passing input data through the whole network, applying weights and biases, and computing the final output
 is called **Forward Propagation**.
+
+### Backpropagation
+
+The output of a neural network doesn't make any sense until the network is trained. **Training the network is just
+setting weights and biases in such a way that the output of the whole network satisfies our needs for all/most of the
+input samples.** The method that trains the network is called **Backpropagation**.
+
+**The main idea of this algorithm is to compare the current output of the network with the expected output for all
+training samples (the more, the better), calculate the error (the deviation between expected and actual outputs), and
+slightly change weights and biases in the direction that gives the biggest decrease of the error.** Mathematically, it's
+built upon the idea of the [gradient descend](../calculus/README.md#the-gradient-of-a-function).
+
+**If you had to train the network manually**, you'd try to configure the hidden layer neurons to recognize some patterns
+and then the neurons of the output layer to decide how the presence or absence of each pattern affects the output. This
+can be done by adjusting the weights and biases. For example, if we had a network that classifies handwritten digits on
+greyscale pictures, one neuron of the hidden layer might be responsible for recognizing a round shape in the top half of
+the picture. A bias of this neuron would be set to activate the neuron only if most of the pixels within the round shape
+are bright enough and the weights of the connections to the pixels outside of the round shape would be negative to
+deactivate the neuron if some other shapes are present in the region. Then, having a round shape in the top half of the
+picture (so, this neuron activated) means that the connections from this neuron to output neurons that represent numbers
+like 8 or 9 should have bigger weights, and connections to other output neurons should have smaller or even negative
+weights. But, as you might have noticed, it's very hard to come up with all the required patterns and almost impossible
+to tweak weights and biases correctly. So, **the goal of backpropagation is to make the network come up with these
+patterns during learning and tweak weights and biases to achieve better results.**
+
+Correct initialization of weights and biases is very important. Usually, the biases are initialized as 0s, and the
+weights are initialized randomly, but
+[uniformly distributed](https://en.wikipedia.org/wiki/Continuous_uniform_distribution) over some interval. The interval
+depends on the number of neurons in layers (Glorot initialization is the most popular one).
+
+Now, math time. The [Mean Squared Error](https://en.wikipedia.org/wiki/Mean_squared_error) is commonly used as the error
+function (in many sources, the terms cost, loss and error functions are interchangeable). Here are formulas to calculate
+the error for all samples and a single sample. $n^{(S)}$ denotes the total number of samples and $\hat{y}$ denotes the
+expected output.
+
+```math
+E = \frac{1}{n^{(S)}} \sum_{k=1}^{n^{(S)}}E_{k}
+```
+
+```math
+E_{k} = (a^{(O)} - \hat{y})^2
+```
+
+To calculate new weights and biases, we need to calculate how an infinitely small change to every each one of them
+affects the error, thus calculate a [partial derivative](../calculus/README.md#partial-derivatives) of the error with
+respect to every weight and bias. Then, we have to multiply this derivative by $-1$ to go in the direction of
+decreasing the error, and add the result to the old weight or bias. Additionally, we need to introduce learning rate
+$\eta$ (pronounced as "eta") - a small multiplier (often defaults to $0.01$) that makes learning slower but more
+precise.
+
+```math
+w_{new} = w - \eta\frac{\partial E}{\partial w} 
+= w - \eta \cdot \frac{1}{n^{(S)}} \sum_{k=1}^{n^{(S)}}\frac{\partial E_{k}}{\partial w} 
+```
+
+```math
+b_{new} = b - \eta\frac{\partial E}{\partial b} 
+= b - \eta \cdot \frac{1}{n^{(S)}} \sum_{k=1}^{n^{(S)}}\frac{\partial E_{k}}{\partial b} 
+```
+
+For the convenience of derivative calculations, let's split neuron functions into summation and activation functions:
+
+```math
+a_{j}^{(H)} = \sigma(z_{j}^{(H)})
+```
+
+```math
+z_{j}^{(H)} = \sum_{i=1}^{n^{(I)}} w_{j,i}^{(H)}x_{i} + b_{j}^{(H)}
+```
+
+```math
+a^{(O)} = \sigma(z^{(O)})
+```
+
+```math
+z^{(O)} = \sum_{j=1}^{n^{(H)}} w_{j}^{(O)}a_{j}^{(H)} + b^{(O)}
+```
+
+To calculate a partial derivative of the error with respect to some weight, we need to calculate partial derivatives of
+the components that are also affected by the change of this weight in the
+[chain](https://en.wikipedia.org/wiki/Chain_rule) up to the error. The same works for biases.
+
+![Backpropagation](backpropagation.gif)
+
+Complete set of the partial derivatives of the error with respect to weights and biases of the hidden and output layers
+of this network:
+
+```math
+\frac{\partial E_{k}}{\partial w_{j,i}^{(H)}} =
+\frac{\partial z_{j}^{(H)}}{\partial w_{j,i}^{(H)}}
+\cdot \frac{\partial a_{j}^{(H)}}{\partial z_{j}^{(H)}}
+\cdot \frac{\partial z^{(O)}}{\partial a_{j}^{(H)}}
+\cdot \frac{\partial a^{(O)}}{\partial z^{(O)}}
+\cdot \frac{\partial E_{k}}{\partial a^{(O)}} 
+```
+
+```math
+\frac{\partial E_{k}}{\partial b_{j}^{(H)}} =
+\frac{\partial z_{j}^{(H)}}{\partial b_{j}^{(H)}}
+\cdot \frac{\partial a_{j}^{(H)}}{\partial z_{j}^{(H)}}
+\cdot \frac{\partial z^{(O)}}{\partial a_{j}^{(H)}}
+\cdot \frac{\partial a^{(O)}}{\partial z^{(O)}}
+\cdot \frac{\partial E_{k}}{\partial a^{(O)}} 
+```
+
+```math
+\frac{\partial E_{k}}{\partial w_{j}^{(O)}} =
+\frac{\partial z^{(O)}}{\partial w_{j}^{(O)}}
+\cdot \frac{\partial a^{(O)}}{\partial z^{(O)}}
+\cdot \frac{\partial E_{k}}{\partial a^{(O)}} 
+```
+
+```math
+\frac{\partial E_{k}}{\partial b^{(O)}} =
+\frac{\partial z^{(O)}}{\partial b^{(O)}}
+\cdot \frac{\partial a^{(O)}}{\partial z^{(O)}}
+\cdot \frac{\partial E_{k}}{\partial a^{(O)}} 
+```
+
+Now, we have all the formulas. You may have noticed that many components are reused. Let's calculate the derivatives of
+these components:
+
+```math
+\frac{\partial E_{k}}{\partial a^{(O)}} = 2(a^{(O)} - \hat{y})
+```
+
+```math
+\frac{\partial a^{(O)}}{\partial z^{(O)}} = \sigma^{\prime}(z^{(O)}) = \sigma(z^{(O)})(1-\sigma(z^{(O)}))
+```
+
+```math
+\frac{\partial z^{(O)}}{\partial a_{j}^{(H)}} = w_j^{(O)}
+```
+
+```math
+\frac{\partial a_{j}^{(H)}}{\partial z_{j}^{(H)}} = \sigma(z_{j}^{(H)})(1-\sigma(z_{j}^{(H)}))
+```
+
+Other missing derivatives:
+
+```math
+\frac{\partial z_{j}^{(H)}}{\partial w_{j,i}^{(H)}} = x_{i}
+```
+
+```math
+\frac{\partial z_{j}^{(H)}}{\partial b_{j}^{(H)}} = 1
+```
+
+```math
+\frac{\partial z^{(O)}}{\partial w_{j}^{(O)}} = a_{j}^{(H)} 
+```
+
+```math
+\frac{\partial z^{(O)}}{\partial b^{(O)}} = 1
+```
+
+**Going through the whole training dataset once and adjusting all the weights and biases means finishing one training
+epoch.** Doing that MANY times will eventually make the error go down very close to 0, and the network will be trained.
+**Neural network is only as good as the dataset it's trained on**. It's recommended to split the dataset into training
+and validation subsets and verify that the success rate of the classification of the validation subset is going up when
+the error is going down. Sometimes, the error may be still going down, but the success rate may start decreasing. This
+might be a sign of [overfitting](https://en.wikipedia.org/wiki/Overfitting#Machine_learning). Using a better weight
+initialization scheme and a lower learning rate may improve the results of your network.
+
+You can look at the [practical project](https://github.com/maksyche/spam-detector) that uses an ANN with the same
+structure written from scratch.
