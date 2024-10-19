@@ -23,9 +23,9 @@ manim -spqk <filename> MyScene
 ```
 - Render and save a gif _(low quality)_:
 ```bash
-manim -ipql <filename> MyScene
+manim -tipql <filename> MyScene
 ```
 - Render and save a video _(high quality)_:
 ```bash
-manim -pqk <filename> MyScene
+manim -tpqk <filename> MyScene
 ```
