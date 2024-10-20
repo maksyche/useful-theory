@@ -85,10 +85,10 @@ class MyScene(ThreeDScene):
                                       str(dot_coords[0]) + r"\approx" + str(round(c, 3)))
                               .rotate(angle=90 * DEGREES, axis=np.array([1, 0, 0])))
 
-        z_formula_text = (MathTex(r"z = m * x + c", color=YELLOW)
+        z_formula_text = (MathTex(r"g(x) = m * x + c", color=YELLOW)
                           .rotate(angle=90 * DEGREES, axis=np.array([1, 0, 0])))
 
-        z_calculated_text = (MathTex(r"z = " + str(round(m, 3)) + "x" + str(round(c, 3)),
+        z_calculated_text = (MathTex(r"g(x) \approx " + str(round(m, 3)) + "x" + str(round(c, 3)),
                                      color=YELLOW)
                              .rotate(angle=90 * DEGREES, axis=np.array([1, 0, 0])))
 
@@ -111,7 +111,7 @@ class MyScene(ThreeDScene):
             Create(plane),
             Create(intersection)
         )
-        self.wait(1)
+        self.wait()
 
         self.stop_ambient_camera_rotation()
 
@@ -126,15 +126,17 @@ class MyScene(ThreeDScene):
         )
         self.play(
             Create(dot),
-            Write(dot_text)
+            Write(dot_text),
         )
 
-        self.play(Write(derivative_text))
-        self.play(Write(m_text))
-        self.play(Write(c_formula_text))
-        self.play(Write(c_calculation_text))
-        self.play(Write(z_formula_text))
-        self.play(Write(z_calculated_text))
+        self.play(
+            Write(derivative_text),
+            Write(m_text),
+            Write(c_formula_text),
+            Write(c_calculation_text),
+            Write(z_formula_text),
+            Write(z_calculated_text)
+        )
 
         self.wait()
         self.play(Create(tangent_line))
