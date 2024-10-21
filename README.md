@@ -17,15 +17,15 @@ python3 toc_generator.py
 ## Graphics
 I use [Manim CE](https://github.com/ManimCommunity/manim) to generate images and videos.
 
-- Render and save an image _(last frame of the scene)_:
+- Render and save an image _(last frame of the scene, high quality, transparent background)_:
 ```bash
-manim -spqk <filename> MyScene
+manim -tspqk <filename> MyScene
 ```
 - Render and save a gif _(low quality)_:
 ```bash
 manim -ipql <filename> MyScene
 ```
-- Render and save a video _(high quality)_:
+- Render and save a video _(high quality, transparent background)_:
 ```bash
-manim -pqk <filename> MyScene
+manim -tpqk <filename> MyScene
 ```
